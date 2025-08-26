@@ -1,0 +1,98 @@
+.__ai_translator__ {
+  all: revert;
+  user-select: none;
+  line-height: 1.55;
+  position: fixed;
+  z-index: 999999;
+  display: none;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  transform: translateY(2px);
+  max-width: 460px;
+}
+
+.__ai_translator__slot {
+  all: revert;
+  display: none;
+  color: lightyellow !important;
+  padding: 10px 12px;
+  background-color: #353c43 !important;
+  box-shadow: 4px 4px 12px #f8f8ff;
+  gap: 8px;
+  max-height: 50vh;
+  overflow: auto;
+  border-radius: 6px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.__ai_translator__button {
+  all: revert;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  color: #4B8BF5;
+  background-color: white !important;
+  box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  border: none;
+  cursor: pointer;
+  transition: box-shadow 150ms;
+}
+
+.__ai_translator__button:hover {
+  box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.15);
+}
+
+.__ai_translator__button svg {
+  all: revert;
+  width: 20px;
+  height: 20px;
+}
+
+.__ai_translator__slot_result svg {
+  all: revert;
+  display: block;
+  color: lightyellow;
+  width: 20px;
+  height: 20px;
+}
+
+.__ai_translator__select {
+  color: #eee;
+  background-color: #353C43;
+  height: 24px;
+  line-height: 24px;
+  outline: none;
+  border: 1px solid #6c7173 !important;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 150ms;
+  max-width: 160px;
+  border-radius: 4px;
+}
+
+.__ai_translator__select:hover {
+  background-color: #353C43 !important;
+}
+
+.__ai_translator__select_container {
+  all: revert;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.__ai_translator__select_arrow_right svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.__ai_translator__loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

@@ -1,0 +1,24 @@
+{
+  "name": "ai-translator",
+  "version": "0.0.1",
+  "description": "Chrome AI Translator extension.",
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "postbuild": "esno scripts/zip.ts",
+    "dev": "tsup --watch",
+    "test": "vitest"
+  },
+  "author": "Plumbiu",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/adm-zip": "0.5.7",
+    "@types/chrome": "0.1.4",
+    "@types/dom-chromium-ai": "0.0.9",
+    "@types/node": "24.3.0",
+    "adm-zip": "0.5.16",
+    "esno": "4.8.0",
+    "tsup": "8.5.0",
+    "typescript": "5.9.2"
+  }
+}
