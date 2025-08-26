@@ -1,6 +1,6 @@
 # ai-translator
 
-[下载](https://github.com/Plumbiu/zh-translator/releases) | [English](./README.md)
+[下载](https://github.com/Plumbiu/ai-translator/releases) | [English](./README.md)
 
 ![extension](./assets/extension.gif)
 
