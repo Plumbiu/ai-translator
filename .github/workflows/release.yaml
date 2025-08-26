@@ -33,9 +33,6 @@ jobs:
       - name: Build
         run: |
           pnpm build
-      - name: Build extension
-        run: |
-          pnpm build:extension
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
