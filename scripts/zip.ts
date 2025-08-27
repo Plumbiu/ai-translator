@@ -1,5 +1,4 @@
 import fs from 'node:fs'
-import zlib from 'node:zlib'
 import Zip from 'adm-zip'
 
 function zipSync() {
@@ -16,12 +15,3 @@ function zipSync() {
 }
 
 zipSync()
-
-
-if (process.env.NODE_ENV === 'development') {
-  zlib.unzip('./build/zh-translator-v0.0.1.zip', (err) => {
-    if (err) {
-      console.error(err)
-    }
-  })
-}

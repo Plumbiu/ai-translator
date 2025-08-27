@@ -14,8 +14,7 @@
     "default_title": "AI Translator"
   },
   "background": {
-    "service_worker": "./dist/service_worker.js",
-    "type": "module"
+    "service_worker": "./dist/background/index.js"
   },
   "permissions": [
     "tabs"

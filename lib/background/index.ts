@@ -1,6 +1,6 @@
-import { SelectAutoDetectValue } from './constans/variables'
-import { TranslateTypeEnum } from './types'
-import { detectLanguage, translate } from './utils/translate'
+import { SelectAutoDetectValue } from '../constans/variables'
+import { TranslateTypeEnum } from '../types'
+import { detectLanguage, translate } from './translate'
 
 chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
   const word = request.word?.trim()
