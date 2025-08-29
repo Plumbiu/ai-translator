@@ -116,5 +116,5 @@ document.addEventListener('mouseup', (e) => {
     return
   }
 
-  setFloatPosition()
+  setFloatPosition(e)
 })

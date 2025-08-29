@@ -12,7 +12,7 @@ import {
 } from '../dom/init'
 import { ButtonHtml, LoadingHtml } from '../constans/html'
 
-export function setFloatPosition() {
+export function setFloatPosition(e: MouseEvent) {
   const selection = getLastSelection() ?? window.getSelection()
   if (!selection) {
     return
@@ -22,15 +22,18 @@ export function setFloatPosition() {
     const text = selection.toString().trim()
     const range = selection.getRangeAt(0)
     if (text && range) {
-      const rect = range.getBoundingClientRect()
       setTranslateWord(text)
       floatDom.style.display = 'block'
-      floatDom.style.top = `${rect.top + rect.height + 4}px`
-      floatDom.style.left = `${rect.left + rect.width / 2}px`
+      // 获取鼠标位置
+      const mousePosition = {
+        x: e.clientX,
+        y: e.clientY,
+      }
+      floatDom.style.top = `${mousePosition.y + 6}px`
+      floatDom.style.left = `${mousePosition.x}px`
       showFloatButton()
     }
-  } catch (error) {
-  }
+  } catch (error) {}
 }
 
 export function hideFloat() {
