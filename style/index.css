@@ -1,6 +1,5 @@
 .__ai_translator__ {
   all: revert;
-  user-select: none;
   line-height: 1.55;
   position: fixed;
   z-index: 999999;
@@ -13,6 +12,7 @@
 .__ai_translator__slot {
   all: revert;
   display: none;
+  user-select: text;
   color: lightyellow !important;
   padding: 10px 12px;
   background-color: #353c43 !important;
@@ -27,6 +27,7 @@
 .__ai_translator__button {
   all: revert;
   display: none;
+  user-select: none;
   justify-content: center;
   align-items: center;
   color: #4B8BF5;

@@ -44,7 +44,6 @@ const translateHandler = (response: any) => {
 }
 
 chrome.runtime.onMessage.addListener((request) => {
-  console.log({ request })
   if (request.type === TranslateTypeEnum.Download) {
     if (!request.done) {
       floatSlotResultDom.innerHTML = `<span style="${request.style}">${request.progress}</span>`

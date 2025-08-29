@@ -20,31 +20,35 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
       translate(word, {
         sourceLanguage: navigator.language,
         targetLanguage,
-      }).then(translatorResult => {
-        sendResponse({
-          type: TranslateTypeEnum.Translate,
-          translation: translatorResult,
-        })
-      }).catch(catchHandler)
-    } else {
-      detectLanguage(word).then(detectorResult => {
-        if (!detectorResult.detectedLanguage) {
-          throw new Error('Unknown language')
-        }
-        translate(word, {
-          sourceLanguage: detectorResult.detectedLanguage,
-          targetLanguage,
-        }).then(translatorResult => {
+      })
+        .then((translatorResult) => {
           sendResponse({
             type: TranslateTypeEnum.Translate,
             translation: translatorResult,
-            sourceLanguage: detectorResult.detectedLanguage,
           })
-        }).catch(catchHandler)
-      }).catch(catchHandler)
+        })
+        .catch(catchHandler)
+    } else {
+      detectLanguage(word)
+        .then((detectorResult) => {
+          if (!detectorResult.detectedLanguage) {
+            throw new Error('Unknown language')
+          }
+          translate(word, {
+            sourceLanguage: detectorResult.detectedLanguage,
+            targetLanguage,
+          })
+            .then((translatorResult) => {
+              sendResponse({
+                type: TranslateTypeEnum.Translate,
+                translation: translatorResult,
+                sourceLanguage: detectorResult.detectedLanguage,
+              })
+            })
+            .catch(catchHandler)
+        })
+        .catch(catchHandler)
     }
-
-
   }
   return true
 })

@@ -13,7 +13,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/adm-zip": "0.5.7",
-    "@types/chrome": "0.1.4",
+    "@types/chrome": "latest",
     "@types/dom-chromium-ai": "0.0.9",
     "@types/node": "24.3.0",
     "adm-zip": "0.5.16",

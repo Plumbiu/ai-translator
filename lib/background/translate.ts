@@ -33,36 +33,52 @@ export async function translate(
   word: string,
   { sourceLanguage, targetLanguage }: TranslateOptions,
 ) {
-  const translatorCapabilities = await Translator.availability({
-    sourceLanguage,
-    targetLanguage,
-  })
+  const abortController = new AbortController()
+  try {
+    const translatorCapabilities = await Translator.availability({
+      sourceLanguage,
+      targetLanguage,
+    })
 
-  const isAvailable = translatorCapabilities === 'available'
+    const isAvailable = translatorCapabilities === 'available'
 
-  if (translatorCapabilities === 'unavailable') {
-    throw new Error('Translator API not available')
+    if (translatorCapabilities === 'unavailable') {
+      throw new Error('Translator API not available')
+    }
+    if (translatorCapabilities === 'downloadable') {
+      sendDownloadProgress('Model loading...', false)
+    }
+
+    const translator = await Translator.create({
+      sourceLanguage,
+      targetLanguage,
+      monitor: isAvailable ? undefined : monitorEventHandler,
+      signal: abortController.signal,
+    })
+
+    const translatorResult = await translator.translate(word, {
+      signal: abortController.signal,
+    })
+    return translatorResult
+  } catch (error) {
+    abortController.abort()
+    throw error
   }
-  if (!isAvailable) {
-    sendDownloadProgress('Downloading model 0%...', false)
-  }
-
-  const translator = await Translator.create({
-    sourceLanguage,
-    targetLanguage,
-    monitor: isAvailable ? undefined : monitorEventHandler,
-  })
-
-  const translatorResult = await translator.translate(word)
-  return translatorResult
 }
 
 export async function detectLanguage(word: string) {
-  const detectorCapabilities = await LanguageDetector.availability()
-  if (detectorCapabilities === 'unavailable') {
-    throw new Error('LanguageDetector API not available')
+  const abortController = new AbortController()
+
+  try {
+    const detectorCapabilities = await LanguageDetector.availability()
+    if (detectorCapabilities === 'unavailable') {
+      throw new Error('LanguageDetector API not available')
+    }
+    const detector = await LanguageDetector.create()
+    const detectorResult = (await detector.detect(word))[0]
+    return detectorResult
+  } catch (error) {
+    abortController.abort()
+    throw error
   }
-  const detector = await LanguageDetector.create()
-  const detectorResult = (await detector.detect(word))[0]
-  return detectorResult
 }
