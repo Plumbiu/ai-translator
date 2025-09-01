@@ -1,6 +1,5 @@
 import {
   getTranslateWord,
-  getLastSelection,
   setTargetLanguage,
   getSourceLanguage,
   getTargetLanguage,
@@ -22,6 +21,7 @@ import {
   hideFloat,
   setFloatPosition,
 } from '../utils/dom'
+import { DelayTime } from '../constans/variables'
 
 const translateHandler = (response: any) => {
   if (response.type === TranslateTypeEnum.Translate) {
@@ -59,15 +59,17 @@ floatButtonDom.addEventListener('click', () => {
   }
   const targetLanguage = getTargetLanguage()
   hideFloatButton()
-  showFloat()
-  chrome.runtime.sendMessage(
-    { type: TranslateTypeEnum.Translate, word, targetLanguage },
-    translateHandler,
-  )
+  setTimeout(() => {
+    showFloat()
+    chrome.runtime.sendMessage(
+      { type: TranslateTypeEnum.Translate, word, targetLanguage },
+      translateHandler,
+    )
+  }, DelayTime)
 })
 
 selectTargetLanguageDom.addEventListener('change', (e) => {
-  const word = getLastSelection()?.toString().trim()
+  const word = getTranslateWord()
   if (!word) {
     return
   }
@@ -82,7 +84,7 @@ selectTargetLanguageDom.addEventListener('change', (e) => {
 })
 
 selectSourceLanguageDom.addEventListener('change', (e) => {
-  const word = getLastSelection()?.toString().trim()
+  const word = getTranslateWord()
   if (!word) {
     return
   }
@@ -115,6 +117,8 @@ document.addEventListener('mouseup', (e) => {
   if (floatVisible && floatDom.contains(target as Element)) {
     return
   }
-
-  setFloatPosition(e)
+  // delay 100ms to ensure the window.getSelection() is updated
+  setTimeout(() => {
+    setFloatPosition(e)
+  }, DelayTime)
 })

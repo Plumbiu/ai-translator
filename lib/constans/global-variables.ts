@@ -1,6 +1,5 @@
 let translateWord: string
 let floatVisible = false
-let lastSelection: Selection
 let sourceLanguage: string
 let targetLanguage = navigator.language
 
@@ -19,16 +18,6 @@ export const setFloatVisible = (v: boolean) => {
 
 export const getFloatVisible = () => {
   return floatVisible
-}
-
-export const setLastSelection = (s: Selection) => {
-  if (s !== lastSelection) {
-    lastSelection = s
-  }
-}
-
-export const getLastSelection = () => {
-  return lastSelection
 }
 
 export const setSourceLanguage = (l: string) => {

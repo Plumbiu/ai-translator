@@ -1,9 +1,4 @@
-import {
-  getLastSelection,
-  setFloatVisible,
-  setLastSelection,
-  setTranslateWord,
-} from '../constans/global-variables'
+import { setFloatVisible, setTranslateWord } from '../constans/global-variables'
 import {
   floatDom,
   floatButtonDom,
@@ -13,11 +8,11 @@ import {
 import { ButtonHtml, LoadingHtml } from '../constans/html'
 
 export function setFloatPosition(e: MouseEvent) {
-  const selection = getLastSelection() ?? window.getSelection()
+  const selection = window.getSelection()
+  console.log({ selection })
   if (!selection) {
     return
   }
-  setLastSelection(selection)
   try {
     const text = selection.toString().trim()
     const range = selection.getRangeAt(0)
@@ -44,6 +39,7 @@ export function hideFloat() {
 }
 
 export function showFloat() {
+  hideFloatButton()
   setFloatVisible(true)
   hideFloatButton()
   floatSlotDom.style.display = 'block'
