@@ -1,10 +1,16 @@
 import { getSelectionInfo } from '../utils/selection'
 import { useTranslationStore } from '../store'
-import { getTooltipPosition } from '../utils/dom'
+import {
+  getRootElement,
+  getTooltipPosition,
+  waitNextFrame,
+  waitForDOMUpdate,
+} from '../utils/dom'
 import { setRootElementPosition } from '../utils/dom'
 import { useRef } from 'react'
 import { TranslatorApi } from '../utils/translator'
 import { SelectAutoDetectValue } from '@ai-translator/constants'
+import type { ComputePositionReturn } from '@floating-ui/dom'
 
 function useTransltor() {
   const sourceLanguage = useTranslationStore((state) => state.sourceLanguage)
@@ -12,6 +18,7 @@ function useTransltor() {
   const setButtonVisible = useTranslationStore(
     (state) => state.setButtonVisible,
   )
+  const slotVisible = useTranslationStore((state) => state.slotVisible)
   const setSlotVisible = useTranslationStore((state) => state.setSlotVisible)
   const setTranslation = useTranslationStore((state) => state.setTranslation)
   const setSlotStyle = useTranslationStore((state) => state.setSlotStyle)
@@ -23,6 +30,8 @@ function useTransltor() {
     text: string
     selection: Selection
   } | null>(null)
+
+  const positionCache = useRef<ComputePositionReturn | null>(null)
 
   function catchHandler(error: any) {
     setTranslation(error.message || 'Unknown error')
@@ -64,6 +73,7 @@ function useTransltor() {
           })
         },
       })
+      setSlotStyle({})
       setLoading(false)
       return result
     } catch (error) {
@@ -73,11 +83,17 @@ function useTransltor() {
     }
   }
 
-  function translate(text: string | null | undefined) {
+  async function translate(text: string | null | undefined) {
     if (!text) {
       return
     }
-    return translateWithMonitor(text).then(handleTranslateResponse)
+    await translateWithMonitor(text).then(handleTranslateResponse)
+
+    // if the translation card is visible, wait for the DOM update and adjust the position
+    if (slotVisible) {
+      await waitForDOMUpdate()
+      adjustTooltipPosition()
+    }
   }
 
   function handleTranslateResponse(response: any) {
@@ -97,6 +113,7 @@ function useTransltor() {
     selectionInfoCache.current = selectionInfo
     const position = await getTooltipPosition(selectionInfo.selection)
     if (position) {
+      positionCache.current = position
       setRootElementPosition(position)
       setButtonVisible(true)
     }
@@ -110,6 +127,52 @@ function useTransltor() {
     const { text } = selectionInfoCache.current
     await translate(text)
     setSlotVisible(true)
+
+    await waitNextFrame()
+    adjustTooltipPosition()
+  }
+
+  function adjustTooltipPosition() {
+    const position = positionCache.current
+    if (!position) return
+
+    const rootElement = getRootElement()
+    if (!rootElement) return
+
+    const rect = rootElement.getBoundingClientRect()
+    const windowWidth = window.innerWidth
+    const windowHeight = window.innerHeight
+    let needsUpdate = false
+
+    // right overflow - use rect.right instead of position.x + rect.width
+    if (rect.right > windowWidth) {
+      position.x = windowWidth - rect.width - 24
+      needsUpdate = true
+    }
+
+    // left overflow - use rect.left instead of position.x
+    if (rect.left < 24) {
+      position.x = 24
+      needsUpdate = true
+    }
+    console.log(rect, windowHeight, windowWidth)
+
+    // bottom overflow - use rect.bottom instead of position.y + rect.height
+    if (rect.bottom > windowHeight) {
+      const newY = windowHeight - rect.height - 24
+      position.y = Math.max(24, newY)
+      needsUpdate = true
+    }
+
+    // top overflow - use rect.top instead of position.y
+    if (rect.top < 24) {
+      position.y = 24
+      needsUpdate = true
+    }
+
+    if (needsUpdate) {
+      setRootElementPosition(position)
+    }
   }
 
   return {
@@ -118,6 +181,7 @@ function useTransltor() {
     translate,
     translateAndShowSlot,
     selectionInfoCache,
+    adjustTooltipPosition,
   }
 }
 

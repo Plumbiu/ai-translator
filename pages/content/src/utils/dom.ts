@@ -1,5 +1,4 @@
 import {
-  autoPlacement,
   computePosition,
   inline,
   offset,
@@ -60,16 +59,21 @@ export async function getTooltipPosition(selection: Selection) {
   }
 
   const position = await computePosition(range, rootElement, {
-    middleware: [
-      autoPlacement({
-        allowedPlacements: ['bottom', 'top'],
-      }),
-      inline(),
-      offset(12),
-    ],
+    placement: 'bottom',
+    middleware: [inline(), offset(12)],
   })
 
-  rootElement.setAttribute('data-placement', position.placement)
-
   return position
+}
+
+export function waitNextFrame() {
+  return new Promise((resolve) => requestAnimationFrame(resolve))
+}
+
+export function waitForDOMUpdate() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => {
+      setTimeout(resolve, 10)
+    })
+  })
 }

@@ -82,7 +82,7 @@ function App() {
       showFloatButton()
     }, 200)
 
-    const handleClick = debounce((e) => {
+    const handleMousedown = debounce((e) => {
       if (isTargetInContainer(e.target)) {
         return
       }
@@ -95,11 +95,11 @@ function App() {
     }, 200)
 
     document.addEventListener('mouseup', handleMouseUp)
-    document.addEventListener('click', handleClick)
+    document.addEventListener('mousedown', handleMousedown)
 
     return () => {
       document.removeEventListener('mouseup', handleMouseUp)
-      document.removeEventListener('click', handleClick)
+      document.removeEventListener('mousedown', handleMousedown)
     }
   }, [sourceLanguage, targetLanguage, slotVisible, buttonVisible])
 
@@ -141,7 +141,9 @@ function App() {
             <Splitter.Panel {...SplitterPannelProps}>
               <Flex vertical justify="space-between" gap={8}>
                 <Space direction="vertical">
-                  <Paragraph>{selectedText}</Paragraph>
+                  <Paragraph className={`${RootClassName}paragraph`}>
+                    {selectedText}
+                  </Paragraph>
                 </Space>
                 <Flex vertical justify="space-between" gap={8}>
                   <Space
@@ -158,7 +160,12 @@ function App() {
             <Splitter.Panel {...SplitterPannelProps}>
               <Flex vertical justify="space-between" gap={8}>
                 <Space direction="vertical">
-                  <Paragraph style={slotStyle}>{translation}</Paragraph>
+                  <Paragraph
+                    style={slotStyle}
+                    className={`${RootClassName}paragraph`}
+                  >
+                    {translation}
+                  </Paragraph>
                 </Space>
                 <Space direction="vertical">
                   <Space

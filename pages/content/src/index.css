@@ -18,16 +18,12 @@
 }
 
 .__ai_translator__:has(.__ai_translator__slot_card) {
-  min-width: 640px;
-  max-width: 640px;
+  width: 640px;
 }
 
-.__ai_translator__[data-placement="top"]:has(.__ai_translator__slot_card) {
-  transform: translateY(-100%);
-}
-
-.__ai_translator__[data-placement="left"]:has(.__ai_translator__slot_card) {
-  transform: translateX(-100%);
+.__ai_translator__paragraph {
+  max-height: 60vh;
+  overflow-y: auto !important;
 }
 
 .__ai_translator__ .__ai_translator__-splitter-panel .__ai_translator__-space {
