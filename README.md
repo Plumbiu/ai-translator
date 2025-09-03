@@ -2,7 +2,7 @@
 
 [Download](https://github.com/Plumbiu/zh-translator/releases) | [简体中文](./README-zh.md)
 
-![extension](./assets/extension.gif)
+![extension](./assets/extension.mp4)
 
 # How it works?
 

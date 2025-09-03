@@ -2,7 +2,7 @@
 
 [下载](https://github.com/Plumbiu/ai-translator/releases) | [English](./README.md)
 
-![extension](./assets/extension.gif)
+![extension](./assets/extension.mp4)
 
 # 工作原理
 
