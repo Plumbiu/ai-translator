@@ -4,10 +4,9 @@
   "description": "Chrome AI Translator extension.",
   "type": "module",
   "scripts": {
-    "build": "tsup",
-    "postbuild": "esno scripts/zip.ts",
-    "dev": "tsup --watch",
-    "test": "vitest"
+    "build": "NODE_ENV=production esno ./scripts/dev.ts",
+    "dev": "NODE_ENV=development esno watch --exclude '**/dist/**' --exclude '**/node_modules/**' --include './chrome-extension/**/*.{ts,tsx}' --include './pages/**/*.{ts,tsx,css}' --include './packages/**/*.{ts,tsx}' ./scripts/dev.ts",
+    "postbuild": "esno scripts/zip.ts"
   },
   "author": "Plumbiu",
   "license": "MIT",
@@ -18,6 +17,7 @@
     "@types/node": "24.3.0",
     "adm-zip": "0.5.16",
     "esno": "4.8.0",
+    "postcss": "^8.5.6",
     "tsup": "8.5.0",
     "typescript": "5.9.2"
   }

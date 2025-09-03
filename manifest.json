@@ -4,20 +4,22 @@
   "version": "0.3.0",
   "description": "AI Translator",
   "icons": {
-    "16": "icons/icon_16.png",
-    "32": "icons/icon_32.png",
-    "48": "icons/icon_48.png",
-    "128": "icons/icon_128.png"
+    "16": "assets/icons/icon_16.png",
+    "32": "assets/icons/icon_32.png",
+    "48": "assets/icons/icon_48.png",
+    "128": "assets/icons/icon_128.png"
   },
   "action": {
-    "default_icon": "icons/icon.png",
+    "default_icon": "assets/icons/icon.png",
     "default_title": "AI Translator"
   },
   "background": {
-    "service_worker": "./dist/background/index.js"
+    "service_worker": "./dist/background.js"
   },
   "permissions": [
-    "tabs"
+    "tabs",
+    "storage",
+    "activeTab"
   ],
   "content_scripts": [
     {
@@ -25,10 +27,10 @@
         "<all_urls>"
       ],
       "css": [
-        "./style/index.css"
+        "./dist/index.css"
       ],
       "js": [
-        "./dist/index.js"
+        "./dist/content.js"
       ]
     }
   ]

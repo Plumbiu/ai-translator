@@ -55,5 +55,16 @@ export const localeDisplayName = new Intl.DisplayNames([navigator.language], {
 }).of(navigator.language)
 
 export const getLocalName = (locale: string) => {
-  return intlDisplayNames.of(locale) || locale
+  const localName = intlDisplayNames.of(locale)
+  if (localName) {
+    return localName
+  }
+  const displayName = new Intl.DisplayNames([locale], {
+    type: 'language',
+  })
+  return displayName.of(locale) || locale
+}
+
+export const getCurrentLanguageName = () => {
+  return localeDisplayName
 }

@@ -1,0 +1,7 @@
+{
+  "name": "@ai-translator/chrome-extension",
+  "type": "module",
+  "dependencies": {
+    "@ai-translator/constants": "workspace:*"
+  }
+}

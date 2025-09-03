@@ -1,0 +1,61 @@
+.__ai_translator__ {
+  position: absolute;
+  z-index: 99;
+  font-size: 14px;
+}
+
+.__ai_translator__ svg {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+.__ai_translator__ .__ai_translator__-card-head {
+  padding: 12px !important;
+}
+
+.__ai_translator__slot_card>.__ai_translator__-card-body {
+  padding: 0px !important;
+}
+
+.__ai_translator__:has(.__ai_translator__slot_card) {
+  min-width: 640px;
+  max-width: 640px;
+}
+
+.__ai_translator__[data-placement="top"]:has(.__ai_translator__slot_card) {
+  transform: translateY(-100%);
+}
+
+.__ai_translator__[data-placement="left"]:has(.__ai_translator__slot_card) {
+  transform: translateX(-100%);
+}
+
+.__ai_translator__ .__ai_translator__-splitter-panel .__ai_translator__-space {
+  width: 100% !important;
+}
+
+/* 拖拽相关样式 */
+.__ai_translator__slot_card .__ai_translator__-card-head {
+  cursor: grab;
+  user-select: none;
+}
+
+.__ai_translator__slot_card .__ai_translator__-card-head:active {
+  cursor: grabbing;
+}
+
+.__ai_translator__slot_card.dragging {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  transform: rotate(2deg);
+  transition: none;
+  z-index: 1000;
+}
+
+.__ai_translator__slot_card.dragging .__ai_translator__-card-head {
+  cursor: grabbing;
+}
+
+/* 拖拽时的半透明效果 */
+.__ai_translator__slot_card.dragging {
+  opacity: 0.9;
+}
