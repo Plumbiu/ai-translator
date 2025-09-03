@@ -2,7 +2,7 @@
 
 [Download](https://github.com/Plumbiu/zh-translator/releases) | [简体中文](./README-zh.md)
 
-![extension](./assets/extension.mp4)
+<video src="./assets/extension.mp4"></video>
 
 # How it works?
 
