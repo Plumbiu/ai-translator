@@ -1,0 +1,75 @@
+import {
+  autoPlacement,
+  computePosition,
+  inline,
+  offset,
+  type ComputePositionReturn,
+  type FloatingElement,
+} from '@floating-ui/dom'
+import { getLanguageSelectDom } from '../components/LanguageSelect'
+import { QueryRootClassName } from '../constants'
+
+let rootElement: FloatingElement | null = null
+
+export function getRootElement() {
+  if (!rootElement) {
+    rootElement = document.querySelector(QueryRootClassName) as FloatingElement
+  }
+  return rootElement
+}
+
+export function isTargetInContainer(_target: EventTarget | null) {
+  const target = _target as Element | null
+  if (!target) {
+    return false
+  }
+  const rootElement = getRootElement()
+  if (!rootElement) {
+    return false
+  }
+
+  const { sourceLanguageSelectDom, targetLanguageSelectDom } =
+    getLanguageSelectDom()
+  return (
+    rootElement.contains(target) ||
+    !!(
+      sourceLanguageSelectDom?.contains(target) ||
+      targetLanguageSelectDom?.contains(target)
+    )
+  )
+}
+
+export function setRootElementPosition(position: ComputePositionReturn) {
+  const rootElement = getRootElement()
+  if (!rootElement) {
+    return
+  }
+  rootElement.style.setProperty('top', `${position.y}px`)
+  rootElement.style.setProperty('left', `${position.x}px`)
+}
+
+export async function getTooltipPosition(selection: Selection) {
+  const rootElement = getRootElement()
+  if (!selection || selection.rangeCount === 0 || !rootElement) {
+    return null
+  }
+
+  const range = selection.getRangeAt(0)
+  if (!range) {
+    return null
+  }
+
+  const position = await computePosition(range, rootElement, {
+    middleware: [
+      autoPlacement({
+        allowedPlacements: ['bottom', 'top'],
+      }),
+      inline(),
+      offset(12),
+    ],
+  })
+
+  rootElement.setAttribute('data-placement', position.placement)
+
+  return position
+}
