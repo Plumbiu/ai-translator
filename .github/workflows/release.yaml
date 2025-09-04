@@ -30,6 +30,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          body_path: ${{ github.workspace }}/CHANGELOG.md
+          body: |
+            'Please refer to [CHANGELOG.md](https://github.com/Plumbiu/ai-translator/blob/main/CHANGELOG.md) for details'
           files: |
             build/*.zip
