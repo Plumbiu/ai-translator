@@ -23,6 +23,12 @@ jobs:
       - name: Build
         run: |
           bun run build
-      - run: bunx changelogithub --assets build/*.zip
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: |
+            Change log: https://github.com/Plumbiu/ai-translator/compare/main...${{ github.ref_name }}
+
+            See the assets to download this version.
+          files: |
+            build/*.zip
