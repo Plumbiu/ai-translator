@@ -1,40 +1,21 @@
 import { useEffect, type CSSProperties } from 'react'
-import {
-  ArrowRightOutlined,
-  LoadingOutlined,
-  TranslationOutlined,
-} from '@ant-design/icons'
+import { TranslationOutlined } from '@ant-design/icons'
 import debounce from 'debounce'
-import {
-  SourceLanguageSelect,
-  TargetLanguageSelect,
-} from './components/LanguageSelect'
 import { useTranslationStore } from './store'
-import {
-  Button,
-  Card,
-  ConfigProvider,
-  Flex,
-  Space,
-  Splitter,
-  Tag,
-  theme,
-  Typography,
-} from 'antd'
+import { Button, Card, ConfigProvider, Splitter, theme } from 'antd'
 import useTransltor from './hooks/useTransltor'
 import useUpdateEffect from './hooks/useUpdateEffect'
-import { isTargetInContainer } from './utils/dom'
-import { getLocalName } from './utils/locale'
-import { formatConfidence } from './utils/format'
-import SpeechButton from './components/SpeechButton'
+import {
+  classNameWithPrefix,
+  getRootElement,
+  isTargetInContainer,
+} from './utils/dom'
 import useTheme from './hooks/useTheme'
-import CopyButton from './components/CopyButton'
 import { RootClassName } from './constants'
-
-const { Text, Paragraph } = Typography
+import { LeftPanleItem, RightPanleItem } from './components/PanelItem'
+import TooltipHeader from './components/TooltipHeader'
 
 const SplitterPannelStyle: CSSProperties = {
-  padding: 16,
   height: '100%',
   overflow: 'hidden',
 }
@@ -52,13 +33,8 @@ function App() {
     setButtonVisible,
     slotVisible,
     setSlotVisible,
-    loading,
-    slotStyle,
-    translation,
     sourceLanguage,
     targetLanguage,
-    detectResult,
-    selectedText,
   } = useTranslationStore()
 
   const {
@@ -68,7 +44,7 @@ function App() {
     selectionInfoCache,
   } = useTransltor()
 
-  const { isDark } = useTheme()
+  const { isDark, systemTheme } = useTheme()
 
   useEffect(() => {
     const handleMouseUp = debounce(async (e) => {
@@ -107,6 +83,13 @@ function App() {
     translate(selectionInfoCache.current?.text)
   }, [sourceLanguage, targetLanguage])
 
+  useEffect(() => {
+    const rootElement = getRootElement()
+    if (rootElement) {
+      rootElement.setAttribute('data-theme', systemTheme)
+    }
+  }, [systemTheme])
+
   return (
     <ConfigProvider
       theme={{
@@ -119,91 +102,15 @@ function App() {
       ) : null}
       {slotVisible ? (
         <Card
-          title={
-            <Flex justify="space-between" gap={8}>
-              <Space>
-                <SourceLanguageSelect />
-                <Text type="secondary">
-                  <ArrowRightOutlined />
-                </Text>
-                <TargetLanguageSelect />
-              </Space>
-              <Space>
-                <LoadingOutlined
-                  style={{ visibility: loading ? 'visible' : 'hidden' }}
-                />
-              </Space>
-            </Flex>
-          }
-          className={`${RootClassName}slot_card`}
+          title={<TooltipHeader />}
+          className={classNameWithPrefix('slot_card')}
         >
           <Splitter>
             <Splitter.Panel {...SplitterPannelProps}>
-              <Flex vertical justify="space-between" gap={8}>
-                <Space direction="vertical">
-                  <Paragraph className={`${RootClassName}paragraph`}>
-                    {selectedText}
-                  </Paragraph>
-                </Space>
-                <Flex vertical justify="space-between" gap={8}>
-                  <Space
-                    style={{
-                      justifyContent: 'flex-end',
-                    }}
-                  >
-                    <SpeechButton text={selectedText} lang={sourceLanguage} />
-                    <CopyButton text={selectedText} />
-                  </Space>
-                </Flex>
-              </Flex>
+              <LeftPanleItem />
             </Splitter.Panel>
             <Splitter.Panel {...SplitterPannelProps}>
-              <Flex vertical justify="space-between" gap={8}>
-                <Space direction="vertical">
-                  <Paragraph
-                    style={slotStyle}
-                    className={`${RootClassName}paragraph`}
-                  >
-                    {translation}
-                  </Paragraph>
-                </Space>
-                <Space direction="vertical">
-                  <Space
-                    style={{
-                      justifyContent: 'flex-end',
-                    }}
-                  >
-                    <SpeechButton text={translation} lang={targetLanguage} />
-                    <CopyButton text={translation} />
-                  </Space>
-                  <Card
-                    size="small"
-                    style={{ overflowX: 'auto', overflowY: 'hidden' }}
-                  >
-                    <Flex>
-                      {detectResult
-                        .filter(
-                          (item) => item.confidence && item.detectedLanguage,
-                        )
-                        .map((item) => (
-                          <Tag
-                            key={item.detectedLanguage}
-                            icon={
-                              <div>
-                                {getLocalName(item.detectedLanguage!)}
-                                {` (${item.detectedLanguage})`}
-                              </div>
-                            }
-                          >
-                            <Text type="secondary" style={{ fontSize: 12 }}>
-                              {formatConfidence(item.confidence!)}
-                            </Text>
-                          </Tag>
-                        ))}
-                    </Flex>
-                  </Card>
-                </Space>
-              </Flex>
+              <RightPanleItem />
             </Splitter.Panel>
           </Splitter>
         </Card>
