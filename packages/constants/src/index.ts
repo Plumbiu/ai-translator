@@ -7,3 +7,5 @@ export const TranslateTypeEnum = {
   Detect: 'detect',
   Download: 'download',
 }
+
+export const a = 1

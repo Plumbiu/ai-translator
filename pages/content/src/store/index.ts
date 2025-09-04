@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import type { CSSProperties } from 'react'
-import { SelectAutoDetectValue } from '@ai-translator/constants'
+import { SelectAutoDetectValue } from '@libs/constants'
 
 interface TranslationStore {
   buttonVisible: boolean

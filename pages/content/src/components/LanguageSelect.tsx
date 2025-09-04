@@ -1,7 +1,7 @@
 import { Select } from 'antd'
 import { getLocalName, supportsLanguages } from '../utils/locale'
 import { useTranslationStore } from '../store'
-import { SelectAutoDetectValue } from '@ai-translator/constants'
+import { SelectAutoDetectValue } from '@libs/constants'
 
 // 生成目标语言选项
 const targetLanguageOptions = [navigator.language, ...supportsLanguages].map(

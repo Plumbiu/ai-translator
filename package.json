@@ -1,25 +1,24 @@
 {
   "name": "ai-translator",
-  "version": "0.3.0",
   "description": "Chrome AI Translator extension.",
   "type": "module",
+  "workspaces": [
+    "chrome-extension",
+    "packages/*",
+    "pages/*"
+  ],
   "scripts": {
-    "build": "NODE_ENV=production esno ./scripts/dev.ts",
-    "dev": "NODE_ENV=development esno watch --exclude '**/dist/**' --exclude '**/node_modules/**' --include './chrome-extension/**/*.{ts,tsx}' --include './pages/**/*.{ts,tsx,css}' --include './packages/**/*.{ts,tsx}' ./scripts/dev.ts",
-    "postbuild": "esno scripts/zip.ts"
+    "build": "WORKSPACE_ROOT=$(pwd) bun --filter '!./' build",
+    "dev": "WORKSPACE_ROOT=$(pwd) bun --filter '!./' dev",
+    "postbuild": "bun scripts/zip.ts"
   },
   "author": "Plumbiu",
   "license": "MIT",
   "devDependencies": {
     "@types/adm-zip": "0.5.7",
+    "@types/bun": "^1.2.21",
     "@types/chrome": "latest",
     "@types/dom-chromium-ai": "0.0.9",
-    "@types/node": "24.3.0",
-    "adm-zip": "0.5.16",
-    "esno": "4.8.0",
-    "postcss": "^8.5.6",
-    "terser": "^5.44.0",
-    "tsup": "8.5.0",
-    "typescript": "5.9.2"
+    "adm-zip": "0.5.16"
   }
 }

@@ -9,7 +9,7 @@ import {
 import { setRootElementPosition } from '../utils/dom'
 import { useRef } from 'react'
 import { TranslatorApi } from '../utils/translator'
-import { SelectAutoDetectValue } from '@ai-translator/constants'
+import { SelectAutoDetectValue } from '@libs/constants'
 import type { ComputePositionReturn } from '@floating-ui/dom'
 
 function useTransltor() {
