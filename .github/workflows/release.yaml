@@ -24,13 +24,13 @@ jobs:
         run: |
           bun run build
       - name: Changelog
-        run: bunx changelogen@latest --output CHANGELOG.md --noAuthors
+        run: bunx changelogen@latest --output CHANGELOG.md --noAuthors --to main
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           body: |
-            'Please refer to [CHANGELOG.md](https://github.com/Plumbiu/ai-translator/blob/main/CHANGELOG.md) for details'
+            Please refer to [CHANGELOG.md](https://github.com/Plumbiu/ai-translator/blob/main/CHANGELOG.md) for details
           files: |
             build/*.zip
