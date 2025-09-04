@@ -8,11 +8,10 @@
     "pages/*"
   ],
   "scripts": {
-    "build": "WORKSPACE_ROOT=$(pwd) bun --filter '!./' build",
-    "dev": "WORKSPACE_ROOT=$(pwd) bun --filter '!./' dev",
+    "prebuild": "WORKSPACE_ROOT=$(pwd) bun --filter '@libs/*' build",
+    "build": "WORKSPACE_ROOT=$(pwd) bun --filter '@ai-translator/*' build",
     "postbuild": "bun scripts/zip.ts",
-    "build:crx": "bun build && bun scripts/crx.ts",
-    "package": "bun scripts/crx.ts"
+    "dev": "WORKSPACE_ROOT=$(pwd) bun --filter '!./' dev"
   },
   "author": "Plumbiu",
   "license": "MIT",
