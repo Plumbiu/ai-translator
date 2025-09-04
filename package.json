@@ -10,7 +10,9 @@
   "scripts": {
     "build": "WORKSPACE_ROOT=$(pwd) bun --filter '!./' build",
     "dev": "WORKSPACE_ROOT=$(pwd) bun --filter '!./' dev",
-    "postbuild": "bun scripts/zip.ts"
+    "postbuild": "bun scripts/zip.ts",
+    "build:crx": "bun build && bun scripts/crx.ts",
+    "package": "bun scripts/crx.ts"
   },
   "author": "Plumbiu",
   "license": "MIT",

@@ -13,14 +13,7 @@
     "default_icon": "assets/icons/icon.png",
     "default_title": "AI Translator"
   },
-  "background": {
-    "service_worker": "./dist/background.js"
-  },
-  "permissions": [
-    "tabs",
-    "storage",
-    "activeTab"
-  ],
+  "permissions": [],
   "content_scripts": [
     {
       "matches": [
