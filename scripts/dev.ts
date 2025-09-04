@@ -3,7 +3,7 @@ import { build, Options } from 'tsup'
 const IS_DEV = process.env.NODE_ENV === 'development'
 
 const commonConfig = {
-  minify: !IS_DEV,
+  minify: IS_DEV ? false : 'terser',
   format: 'esm',
   splitting: false,
 } satisfies Options
@@ -30,6 +30,9 @@ async function run() {
     noExternal: [/(.*)/],
     platform: 'browser',
     esbuildOptions(options) {
+      if (!IS_DEV) {
+        options.drop = ['console', 'debugger']
+      }
       options.jsx = 'automatic'
     },
     ...commonConfig,
