@@ -13,7 +13,7 @@ interface CustomBuildConfig {
   enforeNotWatch?: boolean
 }
 
-export default function build(options: Bun.BuildConfig & CustomBuildConfig) {
+export function build(options: Bun.BuildConfig & CustomBuildConfig) {
   const IS_DEV = getEnv('NODE_ENV') === 'development'
   const WORKSPACE_ROOT = getEnv('WORKSPACE_ROOT') || process.cwd()
 
@@ -31,7 +31,8 @@ export default function build(options: Bun.BuildConfig & CustomBuildConfig) {
       outdir,
       minify: !IS_DEV,
       plugins,
-    })
+      throw: false,
+    }).then(() => {})
   }
 
   _build()

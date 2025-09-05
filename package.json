@@ -12,7 +12,7 @@
     "prebuild": "WORKSPACE_ROOT=$(pwd) bun run build:bundle-utils && bun --filter '@libs/*' build",
     "build": "WORKSPACE_ROOT=$(pwd) bun --filter '@ai-translator/*' build",
     "postbuild": "bun scripts/zip.ts",
-    "dev": "WORKSPACE_ROOT=$(pwd) bun run build:bundle-utils && bun --filter '!(./|@libs/bundle-utils)' dev"
+    "dev": "bun run build:bundle-utils && WORKSPACE_ROOT=$(pwd) bun --filter '!(./)' dev"
   },
   "author": "Plumbiu",
   "license": "MIT",

@@ -1,4 +1,4 @@
-import build from './src'
+import { build } from './src'
 import { name } from './package.json' with { type: 'json' }
 
 build({
@@ -6,5 +6,5 @@ build({
   target: 'bun',
   packageName: name,
   watchDir: import.meta.dirname,
-  enforeNotWatch: true
+  enforeNotWatch: true,
 })

@@ -1,4 +1,4 @@
-import build from '@libs/bundle-utils'
+import { build } from '@libs/bundle-utils'
 import { name } from '@libs/constants/package.json' with { type: 'json' }
 
 build({

@@ -1,5 +1,5 @@
-import build from '@libs/bundle-utils'
-import { name } from '@libs/constants/package.json' with { type: 'json' }
+import { build } from '@libs/bundle-utils'
+import { name } from './package.json' with { type: 'json' }
 
 build({
   entrypoints: ['./src/main.tsx'],

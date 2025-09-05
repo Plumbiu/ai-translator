@@ -1,4 +1,4 @@
-import build from '@libs/bundle-utils'
+import { build } from '@libs/bundle-utils'
 import { name } from './package.json' with { type: 'json' }
 
 build({
@@ -6,4 +6,7 @@ build({
   packageName: name,
   naming: 'background.[ext]',
   watchDir: import.meta.dirname,
+  define: {
+    'process.env.WS_PORT': process.env.WS_PORT || '3030',
+  },
 })

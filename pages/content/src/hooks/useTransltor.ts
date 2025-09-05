@@ -155,7 +155,6 @@ function useTransltor() {
       position.x = 24
       needsUpdate = true
     }
-    console.log(rect, windowHeight, windowWidth)
 
     // bottom overflow - use rect.bottom instead of position.y + rect.height
     if (rect.bottom > windowHeight) {

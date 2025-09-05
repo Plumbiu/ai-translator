@@ -8,9 +8,13 @@
     "dist"
   ],
   "scripts": {
+    "dev": "bun ./dev.ts",
     "build": "bun ./build.ts"
   },
   "devDependencies": {
     "bun-plugin-dts": "^0.3.0"
+  },
+  "dependencies": {
+    "ws": "^8.18.3"
   }
 }
