@@ -1,13 +1,14 @@
 import { MutedOutlined, SoundOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import useSpeech from '../hooks/useSpeech'
+import { memo } from 'react'
 
 interface SpeechButtonProps {
   text: string
   lang: string
 }
 
-function SpeechButton({ text, lang }: SpeechButtonProps) {
+const SpeechButton = memo(({ text, lang }: SpeechButtonProps) => {
   const state = useSpeech(text, { lang })
 
   function handleSpeech() {
@@ -24,6 +25,6 @@ function SpeechButton({ text, lang }: SpeechButtonProps) {
       onClick={handleSpeech}
     />
   )
-}
+})
 
 export default SpeechButton

@@ -17,11 +17,12 @@ export function getRootElement() {
   return rootElement
 }
 
-export function isTargetInContainer(_target: EventTarget | null) {
-  const target = _target as Element | null
+export function isTargetInContainer(event: Event) {
+  const target = event.target as Element | null
   if (!target) {
     return false
   }
+  
   const rootElement = getRootElement()
   if (!rootElement) {
     return false
@@ -29,6 +30,13 @@ export function isTargetInContainer(_target: EventTarget | null) {
 
   const { sourceLanguageSelectDom, targetLanguageSelectDom } =
     getLanguageSelectDom()
+
+  // If target is detached from DOM, assume it's from our component to prevent closing
+  if (!document.contains(target)) {
+    return true
+  }
+  
+  // Fallback to regular contains check
   return (
     rootElement.contains(target) ||
     !!(

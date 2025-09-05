@@ -47,19 +47,23 @@ function App() {
   const { isDark, systemTheme } = useTheme()
 
   useEffect(() => {
-    const handleMouseUp = debounce(async (e) => {
-      if (isTargetInContainer(e.target)) {
-        return
-      }
+    const handleMouseUp = debounce(async (e: Event) => {
       // button only show when both button and slot are not visible
       if (buttonVisible || slotVisible) {
         return
       }
-      showFloatButton()
-    }, 200)
+      if (isTargetInContainer(e)) {
+        return
+      }
 
-    const handleMousedown = debounce((e) => {
-      if (isTargetInContainer(e.target)) {
+      showFloatButton()
+    }, 100)
+
+    const handleMousedown = debounce((e: Event) => {
+      if (!(buttonVisible || slotVisible)) {
+        return
+      }
+      if (isTargetInContainer(e)) {
         return
       }
       if (slotVisible) {
@@ -68,7 +72,7 @@ function App() {
       if (buttonVisible) {
         setButtonVisible(false)
       }
-    }, 200)
+    }, 100)
 
     document.addEventListener('mouseup', handleMouseUp)
     document.addEventListener('mousedown', handleMousedown)
@@ -77,7 +81,7 @@ function App() {
       document.removeEventListener('mouseup', handleMouseUp)
       document.removeEventListener('mousedown', handleMousedown)
     }
-  }, [sourceLanguage, targetLanguage, slotVisible, buttonVisible])
+  }, [slotVisible, buttonVisible])
 
   useUpdateEffect(() => {
     translate(selectionInfoCache.current?.text)
@@ -98,7 +102,11 @@ function App() {
       prefixCls={RootClassName}
     >
       {buttonVisible ? (
-        <Button onClick={translateAndShowSlot} icon={<TranslationOutlined />} />
+        <Button
+          size="small"
+          onClick={translateAndShowSlot}
+          icon={<TranslationOutlined />}
+        />
       ) : null}
       {slotVisible ? (
         <Card
