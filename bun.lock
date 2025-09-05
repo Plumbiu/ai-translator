@@ -4,6 +4,7 @@
     "": {
       "name": "ai-translator",
       "devDependencies": {
+        "@libs/bundle-utils": "workspace:*",
         "@types/adm-zip": "0.5.7",
         "@types/bun": "^1.2.21",
         "@types/chrome": "latest",
@@ -17,12 +18,16 @@
         "@libs/constants": "workspace:*",
       },
     },
-    "packages/constants": {
-      "name": "@libs/constants",
+    "packages/bundle-utils": {
+      "name": "@libs/bundle-utils",
       "version": "1.0.0",
       "devDependencies": {
         "bun-plugin-dts": "^0.3.0",
       },
+    },
+    "packages/constants": {
+      "name": "@libs/constants",
+      "version": "1.0.0",
     },
     "pages/content": {
       "name": "@ai-translator/content",
@@ -121,6 +126,8 @@
     "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@1.5.5", "https://mirrors.tencent.com/npm/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.5.5.tgz", {}, "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og=="],
 
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.30", "https://mirrors.tencent.com/npm/@jridgewell/trace-mapping/-/trace-mapping-0.3.30.tgz", { "dependencies": { "@jridgewell/resolve-uri": "^3.1.0", "@jridgewell/sourcemap-codec": "^1.4.14" } }, "sha512-GQ7Nw5G2lTu/BtHTKfXhKHok2WGetd4XYcVKGx00SjAk8GMwgJM3zr6zORiPGuOE+/vkc90KtTosSSvaCjKb2Q=="],
+
+    "@libs/bundle-utils": ["@libs/bundle-utils@workspace:packages/bundle-utils"],
 
     "@libs/constants": ["@libs/constants@workspace:packages/constants"],
 

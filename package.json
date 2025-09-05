@@ -8,14 +8,16 @@
     "pages/*"
   ],
   "scripts": {
-    "prebuild": "WORKSPACE_ROOT=$(pwd) bun --filter '@libs/*' build",
+    "build:bundle-utils": "bun --filter '@libs/bundle-utils' build",
+    "prebuild": "WORKSPACE_ROOT=$(pwd) bun run build:bundle-utils && bun --filter '@libs/*' build",
     "build": "WORKSPACE_ROOT=$(pwd) bun --filter '@ai-translator/*' build",
     "postbuild": "bun scripts/zip.ts",
-    "dev": "WORKSPACE_ROOT=$(pwd) bun --filter '!./' dev"
+    "dev": "WORKSPACE_ROOT=$(pwd) bun run build:bundle-utils && bun --filter '!(./|@libs/bundle-utils)' dev"
   },
   "author": "Plumbiu",
   "license": "MIT",
   "devDependencies": {
+    "@libs/bundle-utils": "workspace:*",
     "@types/adm-zip": "0.5.7",
     "@types/bun": "^1.2.21",
     "@types/chrome": "latest",

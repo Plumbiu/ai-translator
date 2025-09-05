@@ -1,9 +1,10 @@
-import build from '@libs/bundle-utils'
+import build from './src'
 import { name } from './package.json' with { type: 'json' }
 
 build({
-  entrypoints: ['./src/background/index.ts'],
+  entrypoints: ['./src/index.ts'],
+  target: 'bun',
   packageName: name,
-  naming: 'background.[ext]',
   watchDir: import.meta.dirname,
+  enforeNotWatch: true
 })

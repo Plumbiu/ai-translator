@@ -20,7 +20,7 @@
         "<all_urls>"
       ],
       "css": [
-        "./dist/content.css"
+        "./styles/content.css"
       ],
       "js": [
         "./dist/content.js"

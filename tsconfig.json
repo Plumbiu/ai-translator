@@ -21,8 +21,7 @@
   },
   "include": [
     "**/*.ts",
-    "**/*.tsx",
-    "./tsup.config.ts",
+    "**/*.tsx"
   ],
   "exclude": [
     "node_modules",

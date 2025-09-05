@@ -1,5 +1,5 @@
 {
-  "name": "@libs/constants",
+  "name": "@libs/bundle-utils",
   "version": "1.0.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -8,7 +8,9 @@
     "dist"
   ],
   "scripts": {
-    "dev": "NODE_ENV=development bun ./build.ts",
-    "build": "NODE_ENV=production bun ./build.ts"
+    "build": "bun ./build.ts"
+  },
+  "devDependencies": {
+    "bun-plugin-dts": "^0.3.0"
   }
 }
