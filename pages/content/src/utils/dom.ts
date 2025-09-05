@@ -31,12 +31,6 @@ export function isTargetInContainer(event: Event) {
   const { sourceLanguageSelectDom, targetLanguageSelectDom } =
     getLanguageSelectDom()
 
-  // If target is detached from DOM, assume it's from our component to prevent closing
-  if (!document.contains(target)) {
-    return true
-  }
-  
-  // Fallback to regular contains check
   return (
     rootElement.contains(target) ||
     !!(
@@ -68,7 +62,7 @@ export async function getTooltipPosition(selection: Selection) {
 
   const position = await computePosition(range, rootElement, {
     placement: 'bottom',
-    middleware: [inline(), offset(12)],
+    middleware: [inline(), offset(10)],
   })
 
   return position

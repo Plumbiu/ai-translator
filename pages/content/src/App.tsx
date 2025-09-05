@@ -1,6 +1,5 @@
 import { useEffect, type CSSProperties } from 'react'
 import { TranslationOutlined } from '@ant-design/icons'
-import debounce from 'debounce'
 import { useTranslationStore } from './store'
 import { Button, Card, ConfigProvider, Splitter, theme } from 'antd'
 import useTransltor from './hooks/useTransltor'
@@ -14,6 +13,7 @@ import useTheme from './hooks/useTheme'
 import { RootClassName } from './constants'
 import { LeftPanleItem, RightPanleItem } from './components/PanelItem'
 import TooltipHeader from './components/TooltipHeader'
+import useLatest from './hooks/useLatest'
 
 const SplitterPannelStyle: CSSProperties = {
   height: '100%',
@@ -37,6 +37,9 @@ function App() {
     targetLanguage,
   } = useTranslationStore()
 
+  const latestButtonVisible = useLatest(buttonVisible)
+  const latestSlotVisible = useLatest(slotVisible)
+
   const {
     showFloatButton,
     translateAndShowSlot,
@@ -47,9 +50,9 @@ function App() {
   const { isDark, systemTheme } = useTheme()
 
   useEffect(() => {
-    const handleMouseUp = debounce(async (e: Event) => {
+    const handleMouseUp = async (e: Event) => {
       // button only show when both button and slot are not visible
-      if (buttonVisible || slotVisible) {
+      if (latestButtonVisible.current || latestSlotVisible.current) {
         return
       }
       if (isTargetInContainer(e)) {
@@ -57,22 +60,22 @@ function App() {
       }
 
       showFloatButton()
-    }, 100)
+    }
 
-    const handleMousedown = debounce((e: Event) => {
-      if (!(buttonVisible || slotVisible)) {
+    const handleMousedown = (e: Event) => {
+      if (!(latestButtonVisible.current || latestSlotVisible.current)) {
         return
       }
       if (isTargetInContainer(e)) {
         return
       }
-      if (slotVisible) {
+      if (latestSlotVisible.current) {
         setSlotVisible(false)
       }
-      if (buttonVisible) {
+      if (latestButtonVisible.current) {
         setButtonVisible(false)
       }
-    }, 100)
+    }
 
     document.addEventListener('mouseup', handleMouseUp)
     document.addEventListener('mousedown', handleMousedown)
@@ -81,7 +84,7 @@ function App() {
       document.removeEventListener('mouseup', handleMouseUp)
       document.removeEventListener('mousedown', handleMousedown)
     }
-  }, [slotVisible, buttonVisible])
+  }, [])
 
   useUpdateEffect(() => {
     translate(selectionInfoCache.current?.text)
