@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import Zip from 'adm-zip'
+import { manifest } from './manifest'
 
 function zipSync() {
   if (fs.existsSync('./build')) {
@@ -7,7 +8,7 @@ function zipSync() {
   }
   fs.mkdirSync('./build')
   const zip = new Zip()
-  zip.addLocalFile('./manifest.json')
+  zip.addFile('./mainfest.json', Buffer.from(JSON.stringify(manifest, null, 2)))
   zip.addLocalFolder('./dist', 'dist')
   zip.addLocalFolder('./styles', 'styles')
   zip.addLocalFolder('./assets/icons', 'assets/icons')

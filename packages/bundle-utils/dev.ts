@@ -9,9 +9,13 @@ Bun.serve({
   websocket: {
     open(ws) {
       const distPath = path.resolve(WORKSPACE_ROOT, 'dist')
-      watch(distPath, { recursive: true }, () => {
-        ws.send('reload')
-      })
+      const stylesPath = path.resolve(WORKSPACE_ROOT, 'styles')
+      const manifestPath = path.resolve(WORKSPACE_ROOT, 'manifest.json')
+      const reloadPlugin = () => ws.send('reload')
+
+      watch(distPath, { recursive: true }, reloadPlugin)
+      watch(stylesPath, { recursive: true }, reloadPlugin)
+      watch(manifestPath, { recursive: true }, reloadPlugin)
     },
     message() {},
     close() {},

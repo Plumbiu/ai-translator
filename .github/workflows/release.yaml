@@ -22,7 +22,7 @@ jobs:
         run: bun install
       - name: Build
         run: |
-          bun run build
+          bun run build --tag ${{ github.ref_name }}
       - name: Get previous tag
         id: prev_tag
         run: |
