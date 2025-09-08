@@ -1,7 +1,7 @@
 import { MutedOutlined, SoundOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import useSpeech from '../hooks/useSpeech'
 import { memo } from 'react'
+import useSpeech from '../hooks/useSpeech'
 
 interface SpeechButtonProps {
   text: string

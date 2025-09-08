@@ -1,9 +1,5 @@
-import {
-  useRef,
-  useEffect,
-  type DependencyList,
-  type EffectCallback,
-} from 'react'
+import type { DependencyList, EffectCallback } from 'react'
+import { useEffect, useRef } from 'react'
 
 export const useUpdateEffect = (
   effect: EffectCallback,
@@ -19,11 +15,10 @@ export const useUpdateEffect = (
   }, [])
 
   useEffect(() => {
-    if (!isMounted.current) {
-      isMounted.current = true
-    } else {
+    if (isMounted.current) {
       return effect()
     }
+    isMounted.current = true
   }, deps)
 }
 

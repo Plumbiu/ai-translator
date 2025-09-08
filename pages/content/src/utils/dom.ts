@@ -1,10 +1,5 @@
-import {
-  computePosition,
-  inline,
-  offset,
-  type ComputePositionReturn,
-  type FloatingElement,
-} from '@floating-ui/dom'
+import type { ComputePositionReturn, FloatingElement } from '@floating-ui/dom'
+import { computePosition, inline, offset } from '@floating-ui/dom'
 import { getLanguageSelectDom } from '../components/LanguageSelect'
 import { QueryRootClassName, RootClassName } from '../constants'
 
@@ -22,7 +17,7 @@ export function isTargetInContainer(event: Event) {
   if (!target) {
     return false
   }
-  
+
   const rootElement = getRootElement()
   if (!rootElement) {
     return false
@@ -61,8 +56,8 @@ export async function getTooltipPosition(selection: Selection) {
   }
 
   const position = await computePosition(range, rootElement, {
-    placement: 'bottom',
     middleware: [inline(), offset(10)],
+    placement: 'bottom',
   })
 
   return position

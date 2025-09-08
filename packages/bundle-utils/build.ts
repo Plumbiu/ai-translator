@@ -1,10 +1,10 @@
-import { build } from './src'
 import { name } from './package.json' with { type: 'json' }
+import { build } from './src'
 
 build({
-  entrypoints: ['./src/index.ts'],
-  target: 'bun',
-  packageName: name,
-  watchDir: import.meta.dirname,
   enforeNotWatch: true,
+  entrypoints: ['./src/index.ts'],
+  packageName: name,
+  target: 'bun',
+  watchDir: import.meta.dirname,
 })

@@ -1,20 +1,20 @@
 {
-  "name": "@libs/bundle-utils",
-  "version": "1.0.0",
-  "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "dev": "bun ./dev.ts",
-    "build": "bun ./build.ts"
+  "dependencies": {
+    "ws": "^8.18.3"
   },
   "devDependencies": {
     "bun-plugin-dts": "^0.3.0"
   },
-  "dependencies": {
-    "ws": "^8.18.3"
-  }
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "name": "@libs/bundle-utils",
+  "scripts": {
+    "build": "bun ./build.ts",
+    "dev": "bun ./dev.ts"
+  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "version": "1.0.0"
 }

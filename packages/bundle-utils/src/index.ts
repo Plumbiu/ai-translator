@@ -28,8 +28,8 @@ export function build(options: Bun.BuildConfig & CustomBuildConfig) {
     }
     Bun.build({
       ...options,
-      outdir,
       minify: !IS_DEV,
+      outdir,
       plugins,
       throw: false,
     }).then(() => {})

@@ -17,10 +17,10 @@ export class TranslatorApi {
       }
 
       const translator = await Translator.create({
-        sourceLanguage,
-        targetLanguage,
         monitor: isAvailable ? undefined : monitor,
         signal: abortController.signal,
+        sourceLanguage,
+        targetLanguage,
       })
 
       const translatorResult = await translator.translate(word, {

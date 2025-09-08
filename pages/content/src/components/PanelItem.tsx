@@ -1,21 +1,22 @@
-import { memo, type CSSProperties } from 'react'
 import { Flex, Space, Tag, Typography } from 'antd'
+import type { CSSProperties } from 'react'
+import { memo } from 'react'
 import SimpleBar from 'simplebar-react'
-import { classNameWithPrefix } from '../utils/dom'
-import CopyButton from './CopyButton'
-import SpeechButton from './SpeechButton'
 import { useTranslationStore } from '../store'
+import { classNameWithPrefix } from '../utils/dom'
 import { formatConfidence } from '../utils/format'
 import { getLocalName } from '../utils/locale'
+import CopyButton from './CopyButton'
+import SpeechButton from './SpeechButton'
 
 const { Text, Paragraph } = Typography
 
 const SimpleBarStyle: CSSProperties = {
-  maxHeight: '50vh',
-  padding: 12,
   margin: 2,
-  minWidth: 36,
+  maxHeight: '50vh',
   minHeight: 64,
+  minWidth: 36,
+  padding: 12,
 }
 
 const BottomStyle: CSSProperties = {
@@ -30,7 +31,7 @@ export const LeftPanleItem = memo(() => {
   const selectedText = useTranslationStore((state) => state.selectedText)
   const sourceLanguage = useTranslationStore((state) => state.sourceLanguage)
   return (
-    <Flex vertical justify="space-between" gap={8}>
+    <Flex gap={8} justify="space-between" vertical>
       <Space direction="vertical">
         <Paragraph
           className={classNameWithPrefix('paragraph')}
@@ -39,13 +40,13 @@ export const LeftPanleItem = memo(() => {
           <SimpleBar style={SimpleBarStyle}>{selectedText}</SimpleBar>
         </Paragraph>
       </Space>
-      <Flex vertical justify="space-between" gap={8} style={BottomStyle}>
+      <Flex gap={8} justify="space-between" style={BottomStyle} vertical>
         <Space
           style={{
             justifyContent: 'flex-end',
           }}
         >
-          <SpeechButton text={selectedText} lang={sourceLanguage} />
+          <SpeechButton lang={sourceLanguage} text={selectedText} />
           <CopyButton text={selectedText} />
         </Space>
       </Flex>
@@ -60,11 +61,11 @@ export const RightPanleItem = memo(() => {
   const detectResult = useTranslationStore((state) => state.detectResult)
 
   return (
-    <Flex vertical justify="space-between" gap={8}>
+    <Flex gap={8} justify="space-between" vertical>
       <Space direction="vertical">
         <Paragraph
-          style={{ ...ParagraphStyle, ...slotStyle }}
           className={classNameWithPrefix('paragraph')}
+          style={{ ...ParagraphStyle, ...slotStyle }}
         >
           <SimpleBar style={SimpleBarStyle}>{translation}</SimpleBar>
         </Paragraph>
@@ -75,7 +76,7 @@ export const RightPanleItem = memo(() => {
             justifyContent: 'flex-end',
           }}
         >
-          <SpeechButton text={translation} lang={targetLanguage} />
+          <SpeechButton lang={targetLanguage} text={translation} />
           <CopyButton text={translation} />
         </Space>
         <div>
@@ -85,15 +86,15 @@ export const RightPanleItem = memo(() => {
                 .filter((item) => item.confidence && item.detectedLanguage)
                 .map((item) => (
                   <Tag
-                    key={item.detectedLanguage}
                     icon={
                       <div>
                         {getLocalName(item.detectedLanguage!)}
                         {` (${item.detectedLanguage})`}
                       </div>
                     }
+                    key={item.detectedLanguage}
                   >
-                    <Text type="secondary" style={{ fontSize: 12 }}>
+                    <Text style={{ fontSize: 12 }} type="secondary">
                       {formatConfidence(item.confidence!)}
                     </Text>
                   </Tag>

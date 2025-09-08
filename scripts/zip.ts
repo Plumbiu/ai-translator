@@ -12,7 +12,7 @@ function zipSync() {
   zip.addLocalFolder('./dist', 'dist')
   zip.addLocalFolder('./styles', 'styles')
   zip.addLocalFolder('./assets/icons', 'assets/icons')
-  zip.writeZip(`./build/ai-translator.zip`)
+  zip.writeZip('./build/ai-translator.zip')
 }
 
 zipSync()

@@ -1,14 +1,14 @@
-import { memo } from 'react'
 import { ArrowRightOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Typography, Flex, Space } from 'antd'
-import { SourceLanguageSelect, TargetLanguageSelect } from './LanguageSelect'
+import { Flex, Space, Typography } from 'antd'
+import { memo } from 'react'
 import { useTranslationStore } from '../store'
+import { SourceLanguageSelect, TargetLanguageSelect } from './LanguageSelect'
 
 const { Text } = Typography
 const TooltipHeader = memo(() => {
   const loading = useTranslationStore((state) => state.loading)
   return (
-    <Flex justify="space-between" gap={8}>
+    <Flex gap={8} justify="space-between">
       <Space>
         <SourceLanguageSelect />
         <Text type="secondary">
