@@ -1,0 +1,34 @@
+{
+  "name": "ai-translator",
+  "description": "Chrome AI Translator extension.",
+  "type": "module",
+  "workspaces": [
+    "chrome-extension",
+    "packages/*",
+    "pages/*"
+  ],
+  "scripts": {
+    "prepare": "bun run build:mainfest",
+    "build:bundle-utils": "bun --filter '@libs/bundle-utils' build",
+    "build:mainfest": "bun ./scripts/build-manifest.ts",
+    "build:libs": "bun --filter '@libs/*' build",
+    "build:zip": "bun ./scripts/zip.ts",
+    "prebuild": "bun run build:bundle-utils && bun run build:libs && bun run build:mainfest",
+    "build": "WORKSPACE_ROOT=$(pwd) bun --filter '@ai-translator/*' build && bun run build:zip",
+    "predev": "bun run build:bundle-utils && bun run build:mainfest",
+    "dev": "WORKSPACE_ROOT=$(pwd) bun --filter '!(./)' dev",
+    "clear:dist": "find . -type d -name \"dist\" -not -path \"*/node_modules/*\" -exec rm -rf {} + 2>/dev/null || true"
+  },
+  "author": "Plumbiu",
+  "license": "MIT",
+  "devDependencies": {
+    "@libs/bundle-utils": "workspace:*",
+    "@types/adm-zip": "0.5.7",
+    "@types/bun": "^1.2.21",
+    "@types/chrome": "latest",
+    "@types/dom-chromium-ai": "0.0.9",
+    "@types/minimist": "^1.2.5",
+    "adm-zip": "0.5.16",
+    "minimist": "^1.2.8"
+  }
+}

@@ -1,0 +1,40 @@
+name: Realase
+
+permissions:
+  contents: write
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install dependencies
+        run: bun install
+      - name: Build
+        run: |
+          bun run build --tag ${{ github.ref_name }}
+      - name: Get previous tag
+        id: prev_tag
+        run: |
+          git fetch --tags
+          PREV_TAG=$(git tag --sort=-version:refname | head -2 | tail -1)
+          echo "prev_tag=${PREV_TAG:-HEAD}" >> $GITHUB_OUTPUT
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: |
+            Change log: https://github.com/Plumbiu/ai-translator/compare/${{ steps.prev_tag.outputs.prev_tag }}...${{ github.ref_name }}
+
+            See the assets to download this version.
+          files: |
+            build/*.zip
