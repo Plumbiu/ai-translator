@@ -1,20 +1,9 @@
 {
+  "name": "ai-translator",
   "author": "Plumbiu",
   "description": "Chrome AI Translator extension.",
-  "devDependencies": {
-    "@biomejs/biome": "2.2.3",
-    "@libs/bundle-utils": "workspace:*",
-    "@types/adm-zip": "0.5.7",
-    "@types/bun": "^1.2.21",
-    "@types/chrome": "latest",
-    "@types/dom-chromium-ai": "0.0.9",
-    "@types/minimist": "^1.2.5",
-    "adm-zip": "0.5.16",
-    "minimist": "^1.2.8",
-    "simple-git-hooks": "^2.13.1"
-  },
+  "type": "module",
   "license": "MIT",
-  "name": "ai-translator",
   "scripts": {
     "build": "WORKSPACE_ROOT=$(pwd) bun --filter '@ai-translator/*' build && bun run build:zip",
     "build:bundle-utils": "bun --filter '@libs/bundle-utils' build",
@@ -28,12 +17,24 @@
     "predev": "bun run build:bundle-utils && bun run build:mainfest",
     "prepare": "bun run build:mainfest"
   },
-  "type": "module",
   "workspaces": [
     "chrome-extension",
     "packages/*",
     "pages/*"
   ],
+  "devDependencies": {
+    "@biomejs/biome": "2.2.3",
+    "@libs/bundle-utils": "workspace:*",
+    "@types/adm-zip": "0.5.7",
+    "@types/bun": "^1.2.21",
+    "@types/chrome": "latest",
+    "@types/dom-chromium-ai": "0.0.9",
+    "@types/minimist": "^1.2.5",
+    "adm-zip": "0.5.16",
+    "minimist": "^1.2.8",
+    "simple-git-hooks": "^2.13.1"
+  },
+
   "lint-staged": {
     "*": [
       "bun lint"

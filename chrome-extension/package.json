@@ -1,11 +1,11 @@
 {
+  "name": "@ai-translator/chrome-extension",
+  "type": "module",
+  "scripts": {
+    "dev": "NODE_ENV=development bun ./build.ts",
+    "build": "NODE_ENV=production bun ./build.ts"
+  },
   "dependencies": {
     "@libs/constants": "workspace:*"
-  },
-  "name": "@ai-translator/chrome-extension",
-  "scripts": {
-    "build": "NODE_ENV=production bun ./build.ts",
-    "dev": "NODE_ENV=development bun ./build.ts"
-  },
-  "type": "module"
+  }
 }

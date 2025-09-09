@@ -1,14 +1,14 @@
 {
+  "name": "@libs/constants",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "main": "./dist/index.js",
-  "name": "@libs/constants",
   "scripts": {
-    "build": "NODE_ENV=production bun ./build.ts",
-    "dev": "NODE_ENV=development bun ./build.ts"
-  },
-  "type": "module",
-  "types": "./dist/index.d.ts",
-  "version": "1.0.0"
+    "dev": "NODE_ENV=development bun ./build.ts",
+    "build": "NODE_ENV=production bun ./build.ts"
+  }
 }

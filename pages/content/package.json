@@ -1,8 +1,15 @@
 {
+  "name": "@ai-translator/content",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "NODE_ENV=development bun ./build.ts",
+    "build": "NODE_ENV=production bun ./build.ts"
+  },
   "dependencies": {
+    "@libs/constants": "workspace:*",
     "@ant-design/icons": "^6.0.0",
     "@floating-ui/dom": "^1.7.4",
-    "@libs/constants": "workspace:*",
     "antd": "^5.27.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -12,12 +19,5 @@
   "devDependencies": {
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5"
-  },
-  "name": "@ai-translator/content",
-  "scripts": {
-    "build": "NODE_ENV=production bun ./build.ts",
-    "dev": "NODE_ENV=development bun ./build.ts"
-  },
-  "type": "module",
-  "version": "1.0.0"
+  }
 }
