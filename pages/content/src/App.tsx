@@ -4,17 +4,12 @@ import type { CSSProperties } from 'react'
 import { useEffect } from 'react'
 import { LeftPanleItem, RightPanleItem } from './components/PanelItem'
 import TooltipHeader from './components/TooltipHeader'
-import { RootClassName } from './constants'
 import useLatest from './hooks/useLatest'
 import useTheme from './hooks/useTheme'
 import useTransltor from './hooks/useTransltor'
 import useUpdateEffect from './hooks/useUpdateEffect'
 import { useTranslationStore } from './store'
-import {
-  classNameWithPrefix,
-  getRootElement,
-  isTargetInContainer,
-} from './utils/dom'
+import { getRootElement, isTargetInContainer } from './utils/dom'
 import './content.css'
 
 const SplitterPannelStyle: CSSProperties = {
@@ -101,7 +96,6 @@ function App() {
 
   return (
     <ConfigProvider
-      prefixCls={RootClassName}
       theme={{
         algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}
@@ -114,10 +108,7 @@ function App() {
         />
       ) : null}
       {slotVisible ? (
-        <Card
-          className={classNameWithPrefix('slot_card')}
-          title={<TooltipHeader />}
-        >
+        <Card className="slot_card" title={<TooltipHeader />}>
           <Splitter>
             <Splitter.Panel {...SplitterPannelProps}>
               <LeftPanleItem />

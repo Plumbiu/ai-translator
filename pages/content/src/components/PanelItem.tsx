@@ -3,7 +3,6 @@ import type { CSSProperties } from 'react'
 import { memo } from 'react'
 import SimpleBar from 'simplebar-react'
 import { useTranslationStore } from '../store'
-import { classNameWithPrefix } from '../utils/dom'
 import { formatConfidence } from '../utils/format'
 import { getLocalName } from '../utils/locale'
 import CopyButton from './CopyButton'
@@ -28,20 +27,13 @@ const BottomStyle: CSSProperties = {
   padding: '0 10px 12px 10px',
 }
 
-const ParagraphStyle: CSSProperties = {
-  color: 'white',
-}
-
 export const LeftPanleItem = memo(() => {
   const selectedText = useTranslationStore((state) => state.selectedText)
   const sourceLanguage = useTranslationStore((state) => state.sourceLanguage)
   return (
     <Flex gap={8} justify="space-between" vertical>
       <Space direction="vertical">
-        <Paragraph
-          className={classNameWithPrefix('paragraph')}
-          style={ParagraphStyle}
-        >
+        <Paragraph className="paragraph">
           <SimpleBar style={SimpleBarStyle}>{selectedText}</SimpleBar>
         </Paragraph>
       </Space>
@@ -64,10 +56,7 @@ export const RightPanleItem = memo(() => {
   return (
     <Flex gap={8} justify="space-between" vertical>
       <Space direction="vertical">
-        <Paragraph
-          className={classNameWithPrefix('paragraph')}
-          style={{ ...ParagraphStyle, ...slotStyle }}
-        >
+        <Paragraph className="paragraph" style={slotStyle}>
           <SimpleBar style={SimpleBarStyle}>{translation}</SimpleBar>
         </Paragraph>
       </Space>

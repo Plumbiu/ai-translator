@@ -1,7 +1,7 @@
 import type { ComputePositionReturn, FloatingElement } from '@floating-ui/dom'
 import { computePosition, inline, offset } from '@floating-ui/dom'
 import { getLanguageSelectDom } from '../components/LanguageSelect'
-import { QueryRootClassName, RootClassName } from '../constants'
+import { QueryRootClassName } from '../constants'
 
 let rootElement: FloatingElement | null = null
 
@@ -73,8 +73,4 @@ export function waitForDOMUpdate() {
       setTimeout(resolve, 10)
     })
   })
-}
-
-export function classNameWithPrefix(className: string) {
-  return `${RootClassName}${className}`
 }
