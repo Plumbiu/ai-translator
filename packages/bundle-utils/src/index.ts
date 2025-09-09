@@ -39,7 +39,11 @@ export function build(options: Bun.BuildConfig & CustomBuildConfig) {
     }).then((result) => {
       if (packageName.startsWith('@ai-translator/')) {
         for (const item of result.outputs) {
-          console.log(color.cyan(path.relative(WORKSPACE_ROOT, item.path)) + ': ' + color.green((item.size / 1024).toFixed(2) + 'kb'))
+          console.log(
+            color.cyan(path.relative(WORKSPACE_ROOT, item.path)) +
+              ': ' +
+              color.green((item.size / 1024).toFixed(2) + 'kb'),
+          )
         }
       }
     })

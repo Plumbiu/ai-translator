@@ -1,13 +1,12 @@
 import fs from 'node:fs/promises'
 import { build } from '@libs/bundle-utils'
+import cssnano from 'cssnano'
 import postcss from 'postcss'
 import prefixWrap from 'postcss-prefixwrap'
 import { name } from './package.json' with { type: 'json' }
 import { QueryRootClassName } from './src/constants'
-import cssnano from 'cssnano'
 
 const IS_PRO = process.env.NODE_ENV === 'production'
-
 
 build({
   define: {
@@ -25,13 +24,16 @@ build({
           let content = await fs.readFile(path, 'utf-8')
           if (path.includes('node_modules')) {
             content = (
-              await postcss([prefixWrap(QueryRootClassName), ...(IS_PRO ? [cssnano()] : [])]).process(content)
+              await postcss([
+                prefixWrap(QueryRootClassName),
+                ...(IS_PRO ? [cssnano()] : []),
+              ]).process(content)
             ).content
           }
 
           return {
             contents: content,
-            loader: 'css'
+            loader: 'css',
           }
         })
       },

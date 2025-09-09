@@ -15,7 +15,7 @@
     "lint": "biome check . --write",
     "prebuild": "bun run build:bundle-utils && bun run build:libs && bun run build:mainfest",
     "predev": "bun run build:bundle-utils && bun run build:mainfest",
-    "prepare": "bun run build:mainfest"
+    "prepare": "bun run build:mainfest && simple-git-hooks"
   },
   "workspaces": [
     "chrome-extension",
@@ -44,6 +44,6 @@
     ]
   },
   "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
+    "pre-commit": "bunx lint-staged"
   }
 }
