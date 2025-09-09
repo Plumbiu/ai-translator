@@ -8,6 +8,7 @@ import { formatConfidence } from '../utils/format'
 import { getLocalName } from '../utils/locale'
 import CopyButton from './CopyButton'
 import SpeechButton from './SpeechButton'
+import 'simplebar-react/dist/simplebar.min.css'
 
 const { Text, Paragraph } = Typography
 
@@ -17,6 +18,10 @@ const SimpleBarStyle: CSSProperties = {
   minHeight: 64,
   minWidth: 36,
   padding: 12,
+}
+
+const ActionSpaceStyle: CSSProperties = {
+  justifyContent: 'flex-end',
 }
 
 const BottomStyle: CSSProperties = {
@@ -41,11 +46,7 @@ export const LeftPanleItem = memo(() => {
         </Paragraph>
       </Space>
       <Flex gap={8} justify="space-between" style={BottomStyle} vertical>
-        <Space
-          style={{
-            justifyContent: 'flex-end',
-          }}
-        >
+        <Space style={ActionSpaceStyle}>
           <SpeechButton lang={sourceLanguage} text={selectedText} />
           <CopyButton text={selectedText} />
         </Space>
@@ -70,12 +71,8 @@ export const RightPanleItem = memo(() => {
           <SimpleBar style={SimpleBarStyle}>{translation}</SimpleBar>
         </Paragraph>
       </Space>
-      <Space direction="vertical" style={BottomStyle}>
-        <Space
-          style={{
-            justifyContent: 'flex-end',
-          }}
-        >
+      <Flex gap={8} vertical style={BottomStyle}>
+        <Space style={ActionSpaceStyle}>
           <SpeechButton lang={targetLanguage} text={translation} />
           <CopyButton text={translation} />
         </Space>
@@ -102,7 +99,7 @@ export const RightPanleItem = memo(() => {
             </Flex>
           </SimpleBar>
         </div>
-      </Space>
+      </Flex>
     </Flex>
   )
 })

@@ -13,8 +13,5 @@
   },
   "devDependencies": {
     "bun-plugin-dts": "^0.3.0"
-  },
-  "dependencies": {
-    "ws": "^8.18.3"
   }
 }

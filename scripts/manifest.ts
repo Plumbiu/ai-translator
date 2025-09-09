@@ -14,7 +14,7 @@ export const manifest: chrome.runtime.ManifestV3 = {
   },
   content_scripts: [
     {
-      css: ['./styles/content.css'],
+      css: ['./dist/content.css'],
       js: ['./dist/content.js'],
       matches: ['<all_urls>'],
     },

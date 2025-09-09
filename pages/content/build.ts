@@ -1,5 +1,9 @@
+import fs from 'node:fs/promises'
 import { build } from '@libs/bundle-utils'
+import postcss from 'postcss'
+import prefixWrap from 'postcss-prefixwrap'
 import { name } from './package.json' with { type: 'json' }
+import { QueryRootClassName } from './src/constants'
 
 build({
   define: {
@@ -9,4 +13,23 @@ build({
   naming: 'content.[ext]',
   packageName: name,
   watchDir: import.meta.dirname,
+  plugins: [
+    {
+      name: 'css:loader',
+      setup(build) {
+        build.onLoad({ filter: /.css$/ }, async ({ path }) => {
+          let content = await fs.readFile(path, 'utf-8')
+          if (path.includes('node_modules')) {
+            content = (
+              await postcss([prefixWrap(QueryRootClassName)]).process(content)
+            ).content
+          }
+
+          return {
+            contents: content,
+          }
+        })
+      },
+    },
+  ],
 })

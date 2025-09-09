@@ -7,4 +7,5 @@ build({
   packageName: name,
   target: 'bun',
   watchDir: import.meta.dirname,
+  minify: false,
 })

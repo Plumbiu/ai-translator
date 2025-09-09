@@ -140,9 +140,9 @@
       },
       "performance": {
         "noAccumulatingSpread": "error",
-        "noBarrelFile": "error",
+        "noBarrelFile": "off",
         "noDelete": "error",
-        "noReExportAll": "error",
+        "noReExportAll": "off",
         "useTopLevelRegex": "error",
         "noDynamicNamespaceImportAccess": "error",
         "noImgElement": "off",
@@ -335,7 +335,8 @@
       }
     },
     "includes": [
-      "**",
+      "**/*.ts",
+      "**/*.tsx",
       "!**/node_modules",
       "!**/patches",
       "!**/.next",

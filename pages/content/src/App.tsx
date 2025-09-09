@@ -15,6 +15,7 @@ import {
   getRootElement,
   isTargetInContainer,
 } from './utils/dom'
+import './content.css'
 
 const SplitterPannelStyle: CSSProperties = {
   height: '100%',

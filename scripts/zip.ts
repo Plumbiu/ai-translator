@@ -10,7 +10,6 @@ function zipSync() {
   const zip = new Zip()
   zip.addFile('./mainfest.json', Buffer.from(JSON.stringify(manifest, null, 2)))
   zip.addLocalFolder('./dist', 'dist')
-  zip.addLocalFolder('./styles', 'styles')
   zip.addLocalFolder('./assets/icons', 'assets/icons')
   zip.writeZip('./build/ai-translator.zip')
 }
