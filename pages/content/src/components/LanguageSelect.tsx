@@ -1,18 +1,18 @@
-import { Select } from 'antd'
-import { getLocalName, supportsLanguages } from '../utils/locale'
-import { useTranslationStore } from '../store'
 import { SelectAutoDetectValue } from '@libs/constants'
+import { Select } from 'antd'
+import { useTranslationStore } from '../store'
+import { getLocalName, supportsLanguages } from '../utils/locale'
 
 // 生成目标语言选项
 const targetLanguageOptions = [navigator.language, ...supportsLanguages].map(
   (language) => ({
-    value: language,
     label: `${getLocalName(language)} (${language})`,
+    value: language,
   }),
 )
 
 const sourceLanguageOptions = [
-  { value: SelectAutoDetectValue, label: 'Auto' },
+  { label: 'Auto', value: SelectAutoDetectValue },
   ...targetLanguageOptions,
 ]
 
@@ -30,12 +30,12 @@ export function SourceLanguageSelect() {
           root: SourceLanguageSelectId,
         },
       }}
+      onChange={setSourceLanguage}
+      options={sourceLanguageOptions}
       style={{
         width: 200,
       }}
       value={sourceLanguage}
-      onChange={setSourceLanguage}
-      options={sourceLanguageOptions}
     />
   )
 }
@@ -54,14 +54,14 @@ export function TargetLanguageSelect() {
           root: TargetLanguageSelectId,
         },
       }}
-      style={{
-        width: 200,
-      }}
-      value={targetLanguage}
       onChange={(value) => {
         setTargetLanguage(value)
       }}
       options={targetLanguageOptions}
+      style={{
+        width: 200,
+      }}
+      value={targetLanguage}
     />
   )
 }

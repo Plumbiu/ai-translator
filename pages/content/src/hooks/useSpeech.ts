@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 interface SpeechConfig {
   rate?: number
@@ -111,7 +111,7 @@ function useSpeech(
     if (isPlaying) {
       stopSpeech()
     }
-  }, [text, rate, pitch, volume, lang, stopSpeech])
+  }, [isPlaying, text, rate, pitch, volume, lang, stopSpeech])
 
   useEffect(() => {
     const handleVisibilityChange = () => {

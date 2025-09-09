@@ -1,16 +1,16 @@
-import { getSelectionInfo } from '../utils/selection'
+import type { ComputePositionReturn } from '@floating-ui/dom'
+import { SelectAutoDetectValue } from '@libs/constants'
+import { useRef } from 'react'
 import { useTranslationStore } from '../store'
 import {
   getRootElement,
   getTooltipPosition,
-  waitNextFrame,
+  setRootElementPosition,
   waitForDOMUpdate,
+  waitNextFrame,
 } from '../utils/dom'
-import { setRootElementPosition } from '../utils/dom'
-import { useRef } from 'react'
+import { getSelectionInfo } from '../utils/selection'
 import { TranslatorApi } from '../utils/translator'
-import { SelectAutoDetectValue } from '@libs/constants'
-import type { ComputePositionReturn } from '@floating-ui/dom'
 
 function useTransltor() {
   const sourceLanguage = useTranslationStore((state) => state.sourceLanguage)
@@ -52,8 +52,6 @@ function useTransltor() {
         }
       }
       const result = await TranslatorApi.translate(text, {
-        sourceLanguage: finalSourceLanguage,
-        targetLanguage,
         monitor(m) {
           m.addEventListener('downloadprogress', (event) => {
             const { loaded, total } = event
@@ -62,8 +60,7 @@ function useTransltor() {
             } else {
               setTranslation(
                 `Downloading model ${(
-                  (event.loaded / event.total) *
-                  100
+                  (event.loaded / event.total) * 100
                 ).toFixed(2)}%...`,
               )
             }
@@ -72,6 +69,8 @@ function useTransltor() {
             })
           })
         },
+        sourceLanguage: finalSourceLanguage,
+        targetLanguage,
       })
       setSlotStyle({})
       setLoading(false)
@@ -134,10 +133,14 @@ function useTransltor() {
 
   function adjustTooltipPosition() {
     const position = positionCache.current
-    if (!position) return
+    if (!position) {
+      return
+    }
 
     const rootElement = getRootElement()
-    if (!rootElement) return
+    if (!rootElement) {
+      return
+    }
 
     const rect = rootElement.getBoundingClientRect()
     const windowWidth = window.innerWidth
@@ -175,12 +178,12 @@ function useTransltor() {
   }
 
   return {
-    showFloatButton,
+    adjustTooltipPosition,
     handleTranslateResponse,
+    selectionInfoCache,
+    showFloatButton,
     translate,
     translateAndShowSlot,
-    selectionInfoCache,
-    adjustTooltipPosition,
   }
 }
 

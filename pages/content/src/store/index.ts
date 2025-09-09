@@ -1,6 +1,6 @@
-import { create } from 'zustand'
-import type { CSSProperties } from 'react'
 import { SelectAutoDetectValue } from '@libs/constants'
+import type { CSSProperties } from 'react'
+import { create } from 'zustand'
 
 interface TranslationStore {
   buttonVisible: boolean
@@ -25,23 +25,23 @@ interface TranslationStore {
 
 export const useTranslationStore = create<TranslationStore>((set) => ({
   buttonVisible: false,
-  setButtonVisible: (visible) => set({ buttonVisible: visible }),
-  slotVisible: false,
-  setSlotVisible: (visible) => set({ slotVisible: visible }),
+  detectResult: [],
   loading: false,
-  setLoading: (loading) => set({ loading }),
-  slotStyle: {},
-  setSlotStyle: (slotStyle) => set({ slotStyle }),
   selectedText: '',
+  setButtonVisible: (visible) => set({ buttonVisible: visible }),
+  setDetectResult: (detectResult) => set({ detectResult }),
+  setLoading: (loading) => set({ loading }),
   setSelectedText: (selectedText) => set({ selectedText }),
-  sourceLanguage: SelectAutoDetectValue,
-  targetLanguage: navigator.language,
+  setSlotStyle: (slotStyle) => set({ slotStyle }),
+  setSlotVisible: (visible) => set({ slotVisible: visible }),
   setSourceLanguage: (sourceLanguage) =>
     sourceLanguage && set({ sourceLanguage }),
   setTargetLanguage: (targetLanguage) =>
     targetLanguage && set({ targetLanguage }),
-  translation: '',
   setTranslation: (translation) => set({ translation }),
-  detectResult: [],
-  setDetectResult: (detectResult) => set({ detectResult }),
+  slotStyle: {},
+  slotVisible: false,
+  sourceLanguage: SelectAutoDetectValue,
+  targetLanguage: navigator.language,
+  translation: '',
 }))

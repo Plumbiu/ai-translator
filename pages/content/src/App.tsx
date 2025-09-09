@@ -1,19 +1,16 @@
-import { useEffect, type CSSProperties } from 'react'
 import { TranslationOutlined } from '@ant-design/icons'
-import { useTranslationStore } from './store'
 import { Button, Card, ConfigProvider, Splitter, theme } from 'antd'
-import useTransltor from './hooks/useTransltor'
-import useUpdateEffect from './hooks/useUpdateEffect'
-import {
-  classNameWithPrefix,
-  getRootElement,
-  isTargetInContainer,
-} from './utils/dom'
-import useTheme from './hooks/useTheme'
-import { RootClassName } from './constants'
+import type { CSSProperties } from 'react'
+import { useEffect } from 'react'
 import { LeftPanleItem, RightPanleItem } from './components/PanelItem'
 import TooltipHeader from './components/TooltipHeader'
 import useLatest from './hooks/useLatest'
+import useTheme from './hooks/useTheme'
+import useTransltor from './hooks/useTransltor'
+import useUpdateEffect from './hooks/useUpdateEffect'
+import { useTranslationStore } from './store'
+import { getRootElement, isTargetInContainer } from './utils/dom'
+import './content.css'
 
 const SplitterPannelStyle: CSSProperties = {
   height: '100%',
@@ -21,9 +18,9 @@ const SplitterPannelStyle: CSSProperties = {
 }
 
 const SplitterPannelProps = {
-  min: '25%',
-  max: '75%',
   defaultSize: '50%',
+  max: '75%',
+  min: '25%',
   style: SplitterPannelStyle,
 }
 
@@ -102,20 +99,16 @@ function App() {
       theme={{
         algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}
-      prefixCls={RootClassName}
     >
       {buttonVisible ? (
         <Button
-          size="small"
-          onClick={translateAndShowSlot}
           icon={<TranslationOutlined />}
+          onClick={translateAndShowSlot}
+          size="small"
         />
       ) : null}
       {slotVisible ? (
-        <Card
-          title={<TooltipHeader />}
-          className={classNameWithPrefix('slot_card')}
-        >
+        <Card className="slot_card" title={<TooltipHeader />}>
           <Splitter>
             <Splitter.Panel {...SplitterPannelProps}>
               <LeftPanleItem />
