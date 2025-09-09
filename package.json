@@ -31,6 +31,7 @@
     "@types/dom-chromium-ai": "0.0.9",
     "@types/minimist": "^1.2.5",
     "adm-zip": "0.5.16",
+    "cssnano": "^7.1.1",
     "minimist": "^1.2.8",
     "picocolors": "^1.1.1",
     "postcss": "^8.5.6",
