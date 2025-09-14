@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 interface UseThemeReturn {
   isDark: boolean
@@ -31,8 +31,8 @@ function useTheme(): UseThemeReturn {
   }, [])
 
   return {
-    systemTheme,
     isDark,
+    systemTheme,
   }
 }
 

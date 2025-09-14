@@ -1,0 +1,7 @@
+.__ai_translator__ {
+  position: absolute;
+  z-index: 99;
+  width: max-content;
+  max-width: 860px;
+  font-size: 14px;
+}

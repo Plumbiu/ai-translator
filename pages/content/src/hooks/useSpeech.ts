@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 interface SpeechConfig {
   rate?: number
@@ -20,7 +20,6 @@ function useSpeech(
   const [isPlaying, setIsPlaying] = useState(false)
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null)
 
-  // 停止当前播放
   const stopSpeech = useCallback(() => {
     if (window.speechSynthesis) {
       window.speechSynthesis.cancel()
@@ -29,16 +28,13 @@ function useSpeech(
     utteranceRef.current = null
   }, [])
 
-  // 创建语音实例
   const createUtterance = useCallback(() => {
     if (!text || !text.trim()) {
-      console.warn('文本为空，无法创建语音')
       return null
     }
 
     const utterance = new SpeechSynthesisUtterance(text.trim())
 
-    // 设置语音参数
     utterance.rate = Math.max(0.1, Math.min(10, rate))
     utterance.pitch = Math.max(0, Math.min(2, pitch))
     utterance.volume = Math.max(0, Math.min(1, volume))
@@ -69,7 +65,6 @@ function useSpeech(
     return utterance
   }, [text, rate, pitch, volume, lang])
 
-  // 播放语音
   const speak = useCallback(() => {
     if (isPlaying || window.speechSynthesis.speaking) {
       stopSpeech()
@@ -83,14 +78,12 @@ function useSpeech(
       return
     }
 
-    // 创建新的语音实例
     const newUtterance = createUtterance()
     if (newUtterance) {
       utteranceRef.current = newUtterance
       try {
         window.speechSynthesis.speak(newUtterance)
       } catch (error) {
-        console.error('语音播放失败:', error)
         setIsPlaying(false)
         utteranceRef.current = null
       }
@@ -111,7 +104,7 @@ function useSpeech(
     if (isPlaying) {
       stopSpeech()
     }
-  }, [text, rate, pitch, volume, lang, stopSpeech])
+  }, [isPlaying, text, rate, pitch, volume, lang, stopSpeech])
 
   useEffect(() => {
     const handleVisibilityChange = () => {

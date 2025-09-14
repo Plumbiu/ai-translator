@@ -55,6 +55,9 @@ export const localeDisplayName = new Intl.DisplayNames([navigator.language], {
 }).of(navigator.language)
 
 export const getLocalName = (locale: string) => {
+  if (locale.toLowerCase() === 'und') {
+    return 'unkown'
+  }
   const localName = intlDisplayNames.of(locale)
   if (localName) {
     return localName

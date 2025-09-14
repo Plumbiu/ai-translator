@@ -1,27 +1,20 @@
 import { memo } from 'react'
-import { ArrowRightOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Typography, Flex, Space } from 'antd'
-import { SourceLanguageSelect, TargetLanguageSelect } from './LanguageSelect'
 import { useTranslationStore } from '../store'
+import { ArrowRightOIcon, LoadingIcon } from './icons'
+import { SourceLanguageSelect, TargetLanguageSelect } from './LanguageSelect'
 
-const { Text } = Typography
 const TooltipHeader = memo(() => {
   const loading = useTranslationStore((state) => state.loading)
   return (
-    <Flex justify="space-between" gap={8}>
-      <Space>
-        <SourceLanguageSelect />
-        <Text type="secondary">
-          <ArrowRightOutlined />
-        </Text>
-        <TargetLanguageSelect />
-      </Space>
-      <Space>
-        <LoadingOutlined
-          style={{ visibility: loading ? 'visible' : 'hidden' }}
-        />
-      </Space>
-    </Flex>
+    <div className="flex items-center justify-between gap-2">
+      <SourceLanguageSelect />
+      <ArrowRightOIcon className="text-gray-300" />
+      <TargetLanguageSelect />
+      <LoadingIcon
+        className="ml-2"
+        style={{ visibility: loading ? 'visible' : 'hidden' }}
+      />
+    </div>
   )
 })
 

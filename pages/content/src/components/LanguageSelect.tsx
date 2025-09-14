@@ -1,20 +1,21 @@
-import { Select } from 'antd'
-import { getLocalName, supportsLanguages } from '../utils/locale'
-import { useTranslationStore } from '../store'
 import { SelectAutoDetectValue } from '@libs/constants'
+import { useMemo } from 'react'
+import { useTranslationStore } from '../store'
+import { getLocalName, supportsLanguages } from '../utils/locale'
 
 // 生成目标语言选项
 const targetLanguageOptions = [navigator.language, ...supportsLanguages].map(
   (language) => ({
-    value: language,
     label: `${getLocalName(language)} (${language})`,
+    value: language,
   }),
 )
 
-const sourceLanguageOptions = [
-  { value: SelectAutoDetectValue, label: 'Auto' },
-  ...targetLanguageOptions,
-]
+const targetLanguageOptionDom = targetLanguageOptions.map((item) => (
+  <option key={item.value} value={item.value}>
+    {item.label}
+  </option>
+))
 
 export const SourceLanguageSelectId = '__ai_translator_source_language_select__'
 
@@ -23,20 +24,39 @@ export function SourceLanguageSelect() {
   const setSourceLanguage = useTranslationStore(
     (state) => state.setSourceLanguage,
   )
-  return (
-    <Select
-      classNames={{
-        popup: {
-          root: SourceLanguageSelectId,
+  const detecResult = useTranslationStore((state) => state.detectResult)
+
+  const detectedLanguage = useMemo(
+    () => detecResult[0].detectedLanguage,
+    [detecResult],
+  )
+
+  const sourceLanguageOptionDom = useMemo(
+    () =>
+      [
+        {
+          label: `Auto${detectedLanguage ? ` (${getLocalName(detectedLanguage)})` : ''}`,
+          value: SelectAutoDetectValue,
         },
-      }}
+        ...targetLanguageOptions,
+      ].map((item) => (
+        <option key={item.value} value={item.value}>
+          {item.label}
+        </option>
+      )),
+    [detectedLanguage],
+  )
+  return (
+    <select
+      className="select"
+      onChange={(e) => setSourceLanguage(e.target.value)}
       style={{
         width: 200,
       }}
       value={sourceLanguage}
-      onChange={setSourceLanguage}
-      options={sourceLanguageOptions}
-    />
+    >
+      {sourceLanguageOptionDom}
+    </select>
   )
 }
 
@@ -48,21 +68,18 @@ export function TargetLanguageSelect() {
     (state) => state.setTargetLanguage,
   )
   return (
-    <Select
-      classNames={{
-        popup: {
-          root: TargetLanguageSelectId,
-        },
+    <select
+      className="select"
+      onChange={(e) => {
+        setTargetLanguage(e.target.value)
       }}
       style={{
         width: 200,
       }}
       value={targetLanguage}
-      onChange={(value) => {
-        setTargetLanguage(value)
-      }}
-      options={targetLanguageOptions}
-    />
+    >
+      {targetLanguageOptionDom}
+    </select>
   )
 }
 

@@ -1,0 +1,6 @@
+@import "tailwindcss" source("./");
+@plugin "daisyui" {
+  themes: light --default, dark, dim;
+  include: button, select;
+  exclude: scrollbar, rootscrolllock, reset;
+}
