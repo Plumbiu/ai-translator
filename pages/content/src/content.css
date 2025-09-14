@@ -1,36 +1,7 @@
 .__ai_translator__ {
   position: absolute;
   z-index: 99;
-  font-size: 14px;
-}
-
-.__ai_translator__:has(.slot_card) {
   width: max-content;
-  min-width: 460px;
-  max-width: 780px;
-}
-
-@scope (.__ai_translator__) {
-  svg {
-    pointer-events: none !important;
-    user-select: none !important;
-  }
-
-  .ant-card-head {
-    padding: 12px !important;
-  }
-
-  .ant-card-body {
-    padding: 0px !important;
-  }
-
-  .paragraph {
-    max-height: 520px !important;
-    overflow: hidden !important;
-    scrollbar-width: none !important;
-  }
-
-  .ant-splitter-panel .ant-space {
-    width: 100% !important;
-  }
+  max-width: 860px;
+  font-size: 14px;
 }

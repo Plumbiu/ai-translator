@@ -1,28 +1,16 @@
-import { TranslationOutlined } from '@ant-design/icons'
-import { Button, Card, ConfigProvider, Splitter, theme } from 'antd'
-import type { CSSProperties } from 'react'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import barStyle from 'simplebar-react/dist/simplebar.min.css'
+import { TranslateIcon } from './components/icons'
 import { LeftPanleItem, RightPanleItem } from './components/PanelItem'
 import TooltipHeader from './components/TooltipHeader'
+import Button from './components/ui/Button'
 import useLatest from './hooks/useLatest'
 import useTheme from './hooks/useTheme'
 import useTransltor from './hooks/useTransltor'
 import useUpdateEffect from './hooks/useUpdateEffect'
 import { useTranslationStore } from './store'
-import { getRootElement, isTargetInContainer } from './utils/dom'
-import './content.css'
-
-const SplitterPannelStyle: CSSProperties = {
-  height: '100%',
-  overflow: 'hidden',
-}
-
-const SplitterPannelProps = {
-  defaultSize: '50%',
-  max: '75%',
-  min: '25%',
-  style: SplitterPannelStyle,
-}
+import tailwindcssStyle from './tailwind.css'
+import { isTargetInContainer } from './utils/dom'
 
 function App() {
   const {
@@ -44,7 +32,9 @@ function App() {
     selectionInfoCache,
   } = useTransltor()
 
-  const { isDark, systemTheme } = useTheme()
+  const { systemTheme } = useTheme()
+
+  const wrapperDomRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleMouseUp = async (e: Event) => {
@@ -88,38 +78,33 @@ function App() {
   }, [sourceLanguage, targetLanguage])
 
   useEffect(() => {
-    const rootElement = getRootElement()
+    const rootElement = wrapperDomRef.current
     if (rootElement) {
       rootElement.setAttribute('data-theme', systemTheme)
     }
   }, [systemTheme])
 
   return (
-    <ConfigProvider
-      theme={{
-        algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
-      }}
-    >
-      {buttonVisible ? (
-        <Button
-          icon={<TranslationOutlined />}
-          onClick={translateAndShowSlot}
-          size="small"
-        />
-      ) : null}
-      {slotVisible ? (
-        <Card className="slot_card" title={<TooltipHeader />}>
-          <Splitter>
-            <Splitter.Panel {...SplitterPannelProps}>
+    <>
+      <style>{barStyle}</style>
+      <style>{tailwindcssStyle}</style>
+      <div ref={wrapperDomRef}>
+        {buttonVisible ? (
+          <Button className="btn-circle btn-xs" onClick={translateAndShowSlot}>
+            <TranslateIcon />
+          </Button>
+        ) : null}
+        {slotVisible ? (
+          <div className="flex flex-col gap-4 rounded-lg bg-base-100 p-4">
+            <TooltipHeader />
+            <div className="flex text-sm">
               <LeftPanleItem />
-            </Splitter.Panel>
-            <Splitter.Panel {...SplitterPannelProps}>
               <RightPanleItem />
-            </Splitter.Panel>
-          </Splitter>
-        </Card>
-      ) : null}
-    </ConfigProvider>
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </>
   )
 }
 

@@ -15,7 +15,8 @@
       "!**/public",
       "!**/bun.lock",
       "!**/dist",
-      "!**/build"
+      "!**/build",
+      "!**/tailwind.css"
     ]
   },
   "formatter": {
@@ -343,7 +344,8 @@
       "!**/public",
       "!**/bun.lock",
       "!**/dist/**",
-      "!**/build/**"
+      "!**/build/**",
+      "!**/tailwind.css"
     ]
   },
   "javascript": {

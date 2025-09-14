@@ -18,5 +18,5 @@
     "useDefineForClassFields": true,
     "verbatimModuleSyntax": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "./index.d.ts"]
+  "include": ["**/*.ts", "**/*.tsx", "./index.d.ts"]
 }

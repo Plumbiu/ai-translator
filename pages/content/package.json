@@ -7,17 +7,12 @@
     "build": "NODE_ENV=production bun ./build.ts"
   },
   "dependencies": {
-    "@libs/constants": "workspace:*",
-    "@ant-design/icons": "^6.0.0",
     "@floating-ui/dom": "^1.7.4",
-    "antd": "^5.27.2",
+    "@libs/constants": "workspace:*",
+    "clsx": "^2.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "simplebar-react": "^3.3.2",
     "zustand": "^5.0.8"
-  },
-  "devDependencies": {
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5"
   }
 }

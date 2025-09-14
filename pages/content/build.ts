@@ -1,12 +1,15 @@
 import fs from 'node:fs/promises'
 import { build } from '@libs/bundle-utils'
+import postcssTailwindcssPlugin from '@tailwindcss/postcss'
 import cssnano from 'cssnano'
 import postcss from 'postcss'
-import prefixWrap from 'postcss-prefixwrap'
 import { name } from './package.json' with { type: 'json' }
-import { QueryRootClassName } from './src/constants'
 
 const IS_PRO = process.env.NODE_ENV === 'production'
+
+function escapeSpecialChars(str: string) {
+  return str.replace(/[/[\]%:#!]/g, (char: string) => '\\' + char)
+}
 
 build({
   define: {
@@ -21,22 +24,49 @@ build({
       name: 'css:loader',
       setup(build) {
         build.onLoad({ filter: /.css$/ }, async ({ path }) => {
-          let content = await fs.readFile(path, 'utf-8')
+          const fileContent = await fs.readFile(path, 'utf-8')
           if (path.includes('node_modules')) {
-            content = (
-              await postcss([
-                prefixWrap(QueryRootClassName),
-                ...(IS_PRO ? [cssnano()] : []),
-              ]).process(content)
-            ).content
+            return {
+              contents: `export default \`${escapeSpecialChars(fileContent)}\``,
+              loader: 'js',
+            }
           }
-
+          if (path.endsWith('tailwind.css')) {
+            const plugins: postcss.AcceptedPlugin[] = [
+              postcssTailwindcssPlugin({}),
+              {
+                postcssPlugin: 'postcss:transfrom-root',
+                Rule(rule) {
+                  const selectors = rule.selectors
+                  const finalSelectors = new Set<string>()
+                  for (const selector of selectors) {
+                    if (selector === ':root' || selector === 'html') {
+                      finalSelectors.add(':host')
+                    } else {
+                      finalSelectors.add(selector)
+                    }
+                  }
+                  rule.selectors = [...finalSelectors]
+                },
+              },
+            ]
+            if (IS_PRO) {
+              plugins.push(cssnano())
+            }
+            const content = (await postcss(plugins).process(fileContent))
+              .content
+            return {
+              contents: `export default \`${escapeSpecialChars(content)}\``,
+              loader: 'js',
+            }
+          }
           return {
-            contents: content,
+            contents: fileContent,
             loader: 'css',
           }
         })
       },
     },
   ],
+  throw: true,
 })

@@ -1,7 +1,7 @@
-import { MutedOutlined, SoundOutlined } from '@ant-design/icons'
-import { Button } from 'antd'
 import { memo } from 'react'
 import useSpeech from '../hooks/useSpeech'
+import { MutedIcon, SoundIcon } from './icons'
+import Button from './ui/Button'
 
 interface SpeechButtonProps {
   text: string
@@ -20,10 +20,9 @@ const SpeechButton = memo(({ text, lang }: SpeechButtonProps) => {
   }
 
   return (
-    <Button
-      icon={state.isPlaying ? <MutedOutlined /> : <SoundOutlined />}
-      onClick={handleSpeech}
-    />
+    <Button onClick={handleSpeech}>
+      {state.isPlaying ? <MutedIcon /> : <SoundIcon />}
+    </Button>
   )
 })
 

@@ -1,6 +1,6 @@
-import { CheckOutlined, CopyOutlined } from '@ant-design/icons'
-import { Button } from 'antd'
 import { memo, useCallback, useState } from 'react'
+import { CheckIcon, CopyIcon } from './icons'
+import Button from './ui/Button'
 
 interface CopyButtonProps {
   text: string
@@ -16,10 +16,9 @@ const CopyButton = memo(({ text }: CopyButtonProps) => {
     }, 1000)
   }, [text])
   return (
-    <Button
-      icon={isCopied ? <CheckOutlined /> : <CopyOutlined />}
-      onClick={handleCopy}
-    />
+    <Button onClick={handleCopy}>
+      {isCopied ? <CheckIcon /> : <CopyIcon />}
+    </Button>
   )
 })
 
