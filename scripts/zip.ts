@@ -8,7 +8,7 @@ function zipSync() {
   }
   fs.mkdirSync('./build')
   const zip = new Zip()
-  zip.addFile('./mainfest.json', Buffer.from(JSON.stringify(manifest, null, 2)))
+  zip.addFile('./manifest.json', Buffer.from(JSON.stringify(manifest, null, 2)))
   zip.addLocalFolder('./dist', 'dist')
   zip.addLocalFolder('./assets/icons', 'assets/icons')
   zip.writeZip('./build/ai-translator.zip')
