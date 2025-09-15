@@ -95,7 +95,7 @@ function App() {
           </Button>
         ) : null}
         {slotVisible ? (
-          <div className="flex flex-col gap-4 rounded-lg bg-base-100 p-4">
+          <div className="flex flex-col gap-4 rounded-lg bg-base-100 p-4 text-base-content">
             <TooltipHeader />
             <div className="flex text-sm">
               <LeftPanleItem />
